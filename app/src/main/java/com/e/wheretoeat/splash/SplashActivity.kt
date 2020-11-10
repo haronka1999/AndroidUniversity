@@ -1,13 +1,12 @@
-package com.e.wheretoeat
+package com.e.wheretoeat.splash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.e.wheretoeat.R
 
-class MainActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Log.d("Helo", "initial commit")
+        setContentView(R.layout.activity_splash)
     }
 }
