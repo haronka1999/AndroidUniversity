@@ -8,7 +8,7 @@ import com.e.wheretoeat.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_splash)
         Log.d("Helo", "initial commit")
     }
 }
