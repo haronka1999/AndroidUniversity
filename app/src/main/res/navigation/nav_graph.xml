@@ -9,16 +9,9 @@
         android:id="@+id/homeFragment"
         android:name="com.e.wheretoeat.main.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.e.wheretoeat.main.fragments.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_home" />
+
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.e.wheretoeat.main.fragments.ProfileFragment"
@@ -28,4 +21,6 @@
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
+
 </navigation>

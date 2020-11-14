@@ -3,17 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/detailButton"
-        android:icon="@drawable/ic_information"
-        android:title="Detail"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/homeButton"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
         android:title="Home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/profileButton"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_man_user"
         android:title="Profile"
         app:showAsAction="always" />
