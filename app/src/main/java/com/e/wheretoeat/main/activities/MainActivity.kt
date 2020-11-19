@@ -1,4 +1,4 @@
-package com.e.wheretoeat.main
+package com.e.wheretoeat.main.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

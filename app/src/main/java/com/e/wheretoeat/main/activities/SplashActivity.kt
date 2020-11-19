@@ -1,11 +1,10 @@
-package com.e.wheretoeat.splash
+package com.e.wheretoeat.main.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.e.wheretoeat.R
-import com.e.wheretoeat.main.MainActivity
 
 
 class SplashActivity : AppCompatActivity() {
