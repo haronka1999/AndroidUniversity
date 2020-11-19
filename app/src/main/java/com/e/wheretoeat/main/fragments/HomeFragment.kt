@@ -22,11 +22,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
+
         val list = generateDummyList(20)
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = DataAdapter(list)
-
-        //recyclerView.layoutManager = LinearLayoutManager(this)
+       // recyclerView.layoutManager
         recyclerView.setHasFixedSize(true)
         return binding.root
     }
