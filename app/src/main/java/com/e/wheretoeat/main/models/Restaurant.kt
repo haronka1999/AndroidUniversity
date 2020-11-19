@@ -1,6 +1,6 @@
 package com.e.wheretoeat.main.models
 
-class Restaurant(val title: String, val address: String, val price: Double){
+class Restaurant(var title: String, var address: String, val price: Double){
 
 
 

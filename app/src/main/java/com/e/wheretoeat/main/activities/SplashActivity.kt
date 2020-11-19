@@ -12,19 +12,25 @@ import retrofit2.http.GET
 
 
 class SplashActivity : AppCompatActivity() {
-    private  val BASE_URL =
-        "http://opentable.herokuapp.com/api"
+    private val BASE_URL =
+        "http://opentable.herokuapp.com/api/"
 
-    private val retrofit = Retrofit.Builder()
+       val retrofit = Retrofit.Builder()
         .addConverterFactory(ScalarsConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
 
-    interface MarsApiService {
+    interface RestaurantAPIService {
         @GET("GET /api/stats")
         fun getProperties():
                 Call<String>
     }
+
+//    object RestaurantApi {
+//        val retrofitService: RestaurantAPIService by lazy {
+//            retrofit.create(RestaurantAPIService::class.java)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

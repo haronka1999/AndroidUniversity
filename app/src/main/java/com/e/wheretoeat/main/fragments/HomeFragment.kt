@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         val list = generateDummyList(20)
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = DataAdapter(list)
-       // recyclerView.layoutManager
+        recyclerView.layoutManager = LinearLayoutManager(activity )
         recyclerView.setHasFixedSize(true)
         return binding.root
     }
