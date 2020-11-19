@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
@@ -17,8 +18,15 @@ class DataAdapter(private val list: List<Restaurant>) :
     // 1. user defined ViewHolder type
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(restaurant : Restaurant){
-//            restaurant.address = itemView.(R.id.addressTextView)
-//            restaurant.title = itemView.findViewById(R.id.titleTextView)
+            val imageView: ImageView = itemView.findViewById(R.id.imageView)
+            val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
+            val addressTextView: TextView = itemView.findViewById(R.id.addressTextView)
+
+            restaurant.title = titleTextView.text.toString()
+            restaurant.address = addressTextView.text.toString()
+           // restaurant.image = imageView.setImageResource(Im)
+
+
 
         }
 
@@ -33,11 +41,7 @@ class DataAdapter(private val list: List<Restaurant>) :
     }
     // 3. Called many times, when we scroll the list
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        val currentItem = list[position]
-//        holder.itemView
-//        holder.imageView.setImageResource(currentItem.imageResource)
-//        holder.textView.text = currentItem.text1
-//        holder.textView2.text = currentItem.text2
+        holder.bindItems(list[position])
     }
 
     // 4.

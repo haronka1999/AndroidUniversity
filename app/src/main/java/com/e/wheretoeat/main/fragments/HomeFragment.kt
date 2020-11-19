@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
     private fun generateDummyList(size: Int): List<Restaurant> {
         val list = ArrayList<Restaurant>()
         for (i in 0 until size) {
-            val item = Restaurant("Cim $i", "Address $i", i.toDouble())
+            val item = Restaurant("Cim $i", "Address $i", i.toDouble(),R.drawable.ic_man_user)
             list += item
         }
         return list
