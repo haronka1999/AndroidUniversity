@@ -18,7 +18,7 @@ class DataAdapter(private val list: List<Restaurant>) :
     // 1. user defined ViewHolder type
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(restaurant : Restaurant){
-            val imageView: ImageView = itemView.findViewById(R.id.imageView)
+
             val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
             val addressTextView: TextView = itemView.findViewById(R.id.addressTextView)
 
