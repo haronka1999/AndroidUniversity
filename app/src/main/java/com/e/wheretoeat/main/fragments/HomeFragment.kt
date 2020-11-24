@@ -22,15 +22,18 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        initializeRecyclerView(binding)
+        return binding.root
+    }
 
-
+    private fun initializeRecyclerView(binding: FragmentHomeBinding?) {
         val list = generateDummyList(20)
-        val recyclerView: RecyclerView = binding.recyclerView
+        val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = DataAdapter(list)
         recyclerView.layoutManager = LinearLayoutManager(activity )
         recyclerView.setHasFixedSize(true)
-        return binding.root
     }
+
 
     private fun generateDummyList(size: Int): List<Restaurant> {
         val list = ArrayList<Restaurant>()
