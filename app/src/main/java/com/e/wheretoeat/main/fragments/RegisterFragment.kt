@@ -1,7 +1,5 @@
-package com.e.wheretoeat
+package com.e.wheretoeat.main.fragments
 
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.ui.platform.ViewModelStoreOwnerAmbient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.User
 import com.e.wheretoeat.main.data.UserViewModel
@@ -42,9 +38,10 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_register, container, false)
 
-        mUSerViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+//        mUSerViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         binding.saveButton.setOnClickListener {
             Log.d("Helo", "itt vagy ? ")

@@ -1,6 +1,14 @@
 package com.e.wheretoeat.main.models
 
-class Restaurant(var title: String, var address: String, var price: Double, var image : Int  ){
+import com.google.gson.annotations.SerializedName
+
+class Restaurant(
+    @SerializedName("id") private var restaurantID: Int,
+    private var name: String,
+    private var address: String,
+    private var price: Int,
+    private var image_url: String
+) {
 
 
 
