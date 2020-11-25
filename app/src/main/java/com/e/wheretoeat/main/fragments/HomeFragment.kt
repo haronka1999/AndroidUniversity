@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         initializeRecyclerView(binding)
 
 
-        readDataFromOpenTable()
+       // readDataFromOpenTable()
         return binding.root
     }
 

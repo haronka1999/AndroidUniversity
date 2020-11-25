@@ -1,5 +1,6 @@
 package com.e.wheretoeat.main.fragments
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,10 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
+import com.e.wheretoeat.main.activities.MainActivity
 import com.e.wheretoeat.main.data.User
 import com.e.wheretoeat.main.data.UserViewModel
 import java.math.BigInteger
 import java.security.MessageDigest
+
 
 class RegisterFragment : Fragment() {
 
@@ -40,14 +43,15 @@ class RegisterFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register, container, false)
-
 //        mUSerViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
 
         binding.saveButton.setOnClickListener {
             Log.d("Helo", "itt vagy ? ")
             // insertDataToDatabase()
 
-
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
         }
         return binding.root
     }

@@ -11,16 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhereToEat">
+        <activity android:name=".main.activities.AuthenticateActivity"></activity>
         <activity android:name=".main.activities.SplashActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.activities.MainActivity"></activity>
+    </application>
 
-    <activity android:name=".main.activities.MainActivity">
-    </activity>
-</application>
-
-    </manifest>
+</manifest>
