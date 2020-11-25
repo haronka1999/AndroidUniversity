@@ -2,7 +2,9 @@ package com.e.wheretoeat.main.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -14,7 +16,6 @@ import com.e.wheretoeat.main.api.Repository
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,10 +25,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.myNavHostFragment)
         val bottomNav = binding.bottomNavigationView
         bottomNav?.setupWithNavController(navController)
-
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getRestaurant()
     }
 }

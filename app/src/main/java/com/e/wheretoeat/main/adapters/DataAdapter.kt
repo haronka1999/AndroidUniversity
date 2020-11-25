@@ -22,8 +22,8 @@ class DataAdapter(private val list: List<Restaurant>) :
             val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
             val addressTextView: TextView = itemView.findViewById(R.id.addressTextView)
 
-            restaurant.title = titleTextView.text.toString()
-            restaurant.address = addressTextView.text.toString()
+          //  restaurant.title = titleTextView.text.toString()
+            //restaurant.address = addressTextView.text.toString()
            // restaurant.image = imageView.setImageResource(Im)
 
 
