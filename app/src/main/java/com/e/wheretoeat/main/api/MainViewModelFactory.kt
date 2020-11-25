@@ -1,8 +1,7 @@
-package com.e.wheretoeat.main
+package com.e.wheretoeat.main.api
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.e.wheretoeat.main.api.Repository
 
 //
 class MainViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {

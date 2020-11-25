@@ -1,4 +1,4 @@
-package com.e.wheretoeat.main
+package com.e.wheretoeat.main.api
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

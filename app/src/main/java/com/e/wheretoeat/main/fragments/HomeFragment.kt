@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
-import com.e.wheretoeat.main.MainViewModel
-import com.e.wheretoeat.main.MainViewModelFactory
+import com.e.wheretoeat.main.api.MainViewModel
+import com.e.wheretoeat.main.api.MainViewModelFactory
 import com.e.wheretoeat.main.adapters.DataAdapter
 import com.e.wheretoeat.main.api.Repository
 import com.e.wheretoeat.main.models.Restaurant
@@ -46,7 +46,8 @@ class HomeFragment : Fragment() {
 
     private fun readDataFromOpenTable(){
         val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
+        val viewModelFactory =
+            MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getRestaurant()
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
