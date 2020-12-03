@@ -1,6 +1,6 @@
 package com.e.wheretoeat.main.api
 
-import com.e.wheretoeat.main.models.Restaurant
+import com.e.wheretoeat.main.models.ApiRestaurant
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -3,7 +3,7 @@ package com.e.wheretoeat.main.api
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.e.wheretoeat.main.models.Restaurant
+import com.e.wheretoeat.main.models.ApiRestaurant
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val apiRepository: ApiRepository) : ViewModel() {
