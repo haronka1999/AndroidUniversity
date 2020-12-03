@@ -1,9 +1,7 @@
 package com.e.wheretoeat.main.api
 
-
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL = "http://opentable.herokuapp.com/api/"
@@ -16,7 +14,5 @@ object RetrofitInstance {
 
     val api: SimpleApi by lazy {
         retrofit.create(SimpleApi::class.java)
-
     }
-
 }

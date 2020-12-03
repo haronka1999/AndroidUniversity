@@ -31,7 +31,6 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         initializeRecyclerView(binding)
 
-
         readDataFromOpenTable()
         return binding.root
     }
@@ -44,21 +43,18 @@ class HomeFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
     }
 
-    private fun readDataFromOpenTable(){
+    private  fun readDataFromOpenTable(){
         val repository = ApiRepository()
-        val viewModelFactory =
-            MainViewModelFactory(repository)
+        val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getAllRestaurants("Dallas")
         Log.d("Helo", "Itt vagy ? ")
-        viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.response.observe(viewLifecycleOwner, Observer { response ->
             Log.d("Helo",response.toString());
             Log.d("Helo",response.toString());
             Log.d("Helo",response.toString());
         })
-
     }
-
 
     private fun generateDummyList(size: Int): List<Restaurant> {
 

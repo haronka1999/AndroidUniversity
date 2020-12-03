@@ -1,6 +1,7 @@
 package com.e.wheretoeat.main.api
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,16 +11,24 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class MainViewModel(private val apiRepository: ApiRepository) : ViewModel() {
-    val myResponse: MutableLiveData<List<ApiRestaurant>> = MutableLiveData()
+    private val myResponse: MutableLiveData<List<ApiRestaurant>> = MutableLiveData()
+
+    val response: MutableLiveData<List<ApiRestaurant>>
+        get() =  myResponse
+
+    init {
+       getAllRestaurants("Dallas")
+
+    }
 
 
     fun getAllRestaurants(city: String) {
         viewModelScope.launch {
             try{
-                val response = apiRepository.getAllRestaurants(city)
-                myResponse.value = response
+                val listResult = apiRepository.getAllRestaurants(city)
+                myResponse.value = listResult
             }catch (e : Exception){
-                Log.d("Helo", "Failure  $e")
+                Log.d("Helo", "Failure : $e")
             }
         }
     }

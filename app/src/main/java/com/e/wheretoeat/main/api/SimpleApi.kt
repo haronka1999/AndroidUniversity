@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface SimpleApi {
 
-    //this function wll return a restaurant
+    //this function wll return restaurants in a city
     @GET("restaurants")
     suspend fun getAllRestaurants(@Query("city" ) city : String) : List<ApiRestaurant>
 
