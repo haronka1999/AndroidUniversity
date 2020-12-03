@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -21,6 +21,23 @@
         android:name="com.e.wheretoeat.main.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/registerFragment2"
+        android:name="com.e.wheretoeat.main.fragments.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.e.wheretoeat.main.fragments.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.e.wheretoeat.main.fragments.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 
 </navigation>

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.activities.MainActivity
@@ -23,8 +24,6 @@ import java.security.MessageDigest
 class RegisterFragment : Fragment() {
 
     private lateinit var mUSerViewModel: UserViewModel
-
-
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var email: String
     private lateinit var userName: String
@@ -43,15 +42,16 @@ class RegisterFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register, container, false)
-//        mUSerViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUSerViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
 
         binding.saveButton.setOnClickListener {
             Log.d("Helo", "itt vagy ? ")
-            // insertDataToDatabase()
+             insertDataToDatabase()
+
 
             val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
+           // startActivity(intent)
         }
         return binding.root
     }

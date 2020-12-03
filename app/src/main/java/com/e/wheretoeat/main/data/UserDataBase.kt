@@ -11,6 +11,8 @@ abstract class UserDataBase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 
+
+    //making singleton
     companion object {
         @Volatile
         private var INSTANCE: UserDataBase? = null
@@ -20,7 +22,10 @@ abstract class UserDataBase : RoomDatabase() {
             if (tempInstance != null) {
                 return tempInstance
             }
+            //will be save by multiple threads
             synchronized(this) {}
+
+            //create database
             val instance = Room.databaseBuilder(
                 context.applicationContext,
                 UserDataBase::class.java,

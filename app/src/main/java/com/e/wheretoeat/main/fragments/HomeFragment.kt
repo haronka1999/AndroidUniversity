@@ -16,7 +16,7 @@ import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.api.MainViewModel
 import com.e.wheretoeat.main.api.MainViewModelFactory
 import com.e.wheretoeat.main.adapters.DataAdapter
-import com.e.wheretoeat.main.api.Repository
+import com.e.wheretoeat.main.api.ApiRepository
 import com.e.wheretoeat.main.models.Restaurant
 
 
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         initializeRecyclerView(binding)
 
 
-            // readDataFromOpenTable()
+       // readDataFromOpenTable()
         return binding.root
     }
 
@@ -45,11 +45,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun readDataFromOpenTable(){
-        val repository = Repository()
+        val repository = ApiRepository()
         val viewModelFactory =
             MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getRestaurant()
+        viewModel.getRestaurant(107257)
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
             Log.d("Helo",response.toString());
             Log.d("Helo",response.toString());
