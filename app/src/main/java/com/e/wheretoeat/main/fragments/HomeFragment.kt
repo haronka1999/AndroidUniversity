@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         initializeRecyclerView(binding)
 
 
-       // readDataFromOpenTable()
+        readDataFromOpenTable()
         return binding.root
     }
 
@@ -49,7 +49,8 @@ class HomeFragment : Fragment() {
         val viewModelFactory =
             MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getRestaurant(107257)
+        viewModel.getAllRestaurants("Dallas")
+        Log.d("Helo", "Itt vagy ? ")
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
             Log.d("Helo",response.toString());
             Log.d("Helo",response.toString());

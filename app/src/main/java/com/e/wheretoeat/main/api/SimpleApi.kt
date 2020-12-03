@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface SimpleApi {
 
     //this function wll return a restaurant
-    @GET("api/restaurants?city=Dallas")
-    suspend fun getRestaurant(@Query("id" ) id : Int) : ApiRestaurant
+    @GET("restaurants")
+    suspend fun getAllRestaurants(@Query("city" ) city : String) : List<ApiRestaurant>
 
 }
