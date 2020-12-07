@@ -22,7 +22,7 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         //if the restaurant data is loaded go to home
         viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
             sharedPref =

@@ -20,6 +20,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail,container,false)
 
         binding.restNameTextView.text = viewModel.currentRestaurant.name

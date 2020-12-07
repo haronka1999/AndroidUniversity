@@ -1,4 +1,4 @@
-package com.e.wheretoeat.main.data
+package com.e.wheretoeat.main.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

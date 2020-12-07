@@ -1,31 +1,29 @@
 package com.e.wheretoeat.main.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
-import com.e.wheretoeat.main.activities.MainActivity
-import com.e.wheretoeat.main.data.User
-import com.e.wheretoeat.main.data.UserViewModel
-import java.math.BigInteger
-import java.security.MessageDigest
+import com.e.wheretoeat.main.models.User
+import com.e.wheretoeat.main.viewmodels.MainViewModel
+import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var mUSerViewModel: UserViewModel
+
+    private val mUserViewModel: UserViewModel by activityViewModels()
+
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var email: String
     private lateinit var userName: String
@@ -41,7 +39,7 @@ class RegisterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_register, container, false
@@ -54,15 +52,26 @@ class RegisterFragment : Fragment() {
             if (!isValidForm(userName, password)) {
                 return@setOnClickListener
             }
+
+            //add the user details to shared preferences
             val editor = sharedPref.edit()
             editor.clear()
             editor.putString("username", userName)
             editor.putString("password", password)
             editor.apply()
+
+            //add data to database
+            insertDatatoDatBase()
             findNavController().navigate(R.id.action_registerFragment2_to_homeFragment)
 
         }
         return binding.root
+    }
+
+    private fun insertDatatoDatBase() {
+        val user = User(0, userName, password)
+        mUserViewModel.addUser(user)
+        Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
 

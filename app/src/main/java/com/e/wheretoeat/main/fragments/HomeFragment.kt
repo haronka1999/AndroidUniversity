@@ -27,6 +27,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         val list = viewModel.restaurantsByCountries.value!!
