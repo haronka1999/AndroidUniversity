@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val readAllData: LiveData<List<User>>
+    val readAllData: LiveData<List<User>>
     private val repository: UserRepository
 
-     init {
+    init {
         val userDao = UserDataBase.getDatabase(
             application
         ).userDao()
@@ -34,4 +34,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             repository.addUser(user)
         }
     }
+
+
 }

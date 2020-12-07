@@ -20,16 +20,11 @@ import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 class RegisterFragment : Fragment() {
 
-
-   // private val mUserViewModel: UserViewModel by activityViewModels()
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var binding: FragmentRegisterBinding
-    private lateinit var email: String
     private lateinit var userName: String
     private lateinit var password: String
-    private var userID: Int = 0
     private var userNames: MutableList<String> = mutableListOf()
-    private var emails: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
 
 
