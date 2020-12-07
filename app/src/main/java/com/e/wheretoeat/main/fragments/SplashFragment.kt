@@ -24,7 +24,7 @@ class SplashFragment : Fragment() {
     ): View? {
        // requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         //if the restaurant data is loaded go to home
-        viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
+        viewModel.apiRestaurantsByCountries.observe(viewLifecycleOwner, Observer {
             sharedPref =
                 context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
             val credentials = sharedPref.all

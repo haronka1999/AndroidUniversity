@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.main.api.ApiRepository
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
-import com.e.wheretoeat.main.models.Restaurant
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,14 +15,14 @@ import retrofit2.Response
 class MainViewModel : ViewModel() {
 
     //viewModel datas
-    var restaurantsByCountries: MutableLiveData<MutableList<Restaurant>> = MutableLiveData()
-    lateinit var currentRestaurant: Restaurant
+    var apiRestaurantsByCountries: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
+    lateinit var currentApiRestaurant: ApiRestaurant
     private val apiRepository = ApiRepository()
 
 
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
-        val tempList: MutableList<Restaurant> = mutableListOf()
+        val tempListApiRestaurant: MutableList<ApiRestaurant> = mutableListOf()
         result.enqueue(object : Callback<ApiRestaurantResponse> {
             override fun onResponse(
                 call: Call<ApiRestaurantResponse>,
@@ -31,17 +30,17 @@ class MainViewModel : ViewModel() {
             ) {
                 val restaurantSize = response.body()!!.total_entries
                 for (i in 0 until restaurantSize) {
-                    val restaurant = convertTORestaurant(response.body()!!.restaurants[i])
-                    tempList += restaurant
+                    val apiRestaurant = response.body()!!.restaurants[i]
+
+                    tempListApiRestaurant += apiRestaurant
                 }
-                restaurantsByCountries.value = tempList
+                apiRestaurantsByCountries.value = tempListApiRestaurant
             }
 
             override fun onFailure(call: Call<ApiRestaurantResponse>, t: Throwable) {
                 Log.d("Helo", "onfailure - all restaurant: ${t.message}")
             }
         })
-
     }
 
 
@@ -62,15 +61,4 @@ class MainViewModel : ViewModel() {
             })
         }
     }
-
-    //this will need to display data to the adapter
-    fun convertTORestaurant(apiRestaurant: ApiRestaurant) = Restaurant(
-        0,
-        apiRestaurant.name,
-        apiRestaurant.address,
-        apiRestaurant.price,
-        apiRestaurant.country
-    )
-
-
 }

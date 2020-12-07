@@ -10,10 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
-import com.e.wheretoeat.main.models.Restaurant
+import com.e.wheretoeat.main.models.ApiRestaurant
+
 
 class RestaurantAdapter(
-    private var list: MutableList<Restaurant>,
+    private var list: MutableList<ApiRestaurant>,
     private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<RestaurantAdapter.DataViewHolder>() {
@@ -39,7 +40,7 @@ class RestaurantAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(item: Restaurant)
+        fun onItemClick(item: ApiRestaurant)
     }
 
     // 2. Called only a few times = number of items on screen + a few more ones

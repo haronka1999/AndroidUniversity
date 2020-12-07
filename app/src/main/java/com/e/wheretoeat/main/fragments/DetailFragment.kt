@@ -23,10 +23,10 @@ class DetailFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail,container,false)
 
-        binding.restNameTextView.text = viewModel.currentRestaurant.name
+        binding.restNameTextView.text = viewModel.currentApiRestaurant.name
         binding.imageView.setImageResource(R.drawable.food)
-        binding.addressTextView.text = "Address: " +  viewModel.currentRestaurant.address
-        binding.priceTextView.text =  "Price: " + viewModel.currentRestaurant.price.toString()
+        binding.addressTextView.text = "Address: " +  viewModel.currentApiRestaurant.address
+        binding.priceTextView.text =  "Price: " + viewModel.currentApiRestaurant.price.toString()
 
         return binding.root
     }

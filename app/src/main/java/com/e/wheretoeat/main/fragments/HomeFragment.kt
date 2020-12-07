@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
+import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
-//import com.e.wheretoeat.main.api.MainViewModelFactory
-import com.e.wheretoeat.main.models.Restaurant
-
 
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
@@ -30,28 +28,17 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        val list = viewModel.restaurantsByCountries.value!!
-        Log.d("Helo", "list : $list ")
+        val apiList = viewModel.apiRestaurantsByCountries.value!!
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-        recyclerView.adapter = RestaurantAdapter(list, this@HomeFragment)
+        recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
-
-//        viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
-//        })
-
-        //   getRestaurantsFromApi()
-
         return binding.root
     }
 
 
-    private fun getRestaurantsFromApi() {
-        viewModel.getAllRestaurants()
-    }
-
-    override fun onItemClick(item: Restaurant) {
-        viewModel.currentRestaurant = item
+    override fun onItemClick(item: ApiRestaurant) {
+        viewModel.currentApiRestaurant = item
         findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
     }
 }
