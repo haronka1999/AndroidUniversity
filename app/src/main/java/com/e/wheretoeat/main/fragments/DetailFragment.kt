@@ -1,7 +1,6 @@
 package com.e.wheretoeat.main.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentDetailBinding
-import com.e.wheretoeat.main.api.MainViewModel
+import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
 class DetailFragment : Fragment() {

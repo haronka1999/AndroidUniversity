@@ -8,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
-import com.e.wheretoeat.main.api.MainViewModel
+import com.e.wheretoeat.main.viewmodels.MainViewModel
 //import com.e.wheretoeat.main.api.MainViewModelFactory
 import com.e.wheretoeat.main.models.Restaurant
 

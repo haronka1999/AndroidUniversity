@@ -1,10 +1,10 @@
-package com.e.wheretoeat.main.api
+package com.e.wheretoeat.main.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.e.wheretoeat.main.api.ApiRepository
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
 import com.e.wheretoeat.main.models.Restaurant
@@ -21,10 +21,9 @@ class MainViewModel : ViewModel() {
     private val apiRepository = ApiRepository()
 
 
-
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
-        val tempList : MutableList<Restaurant> =  mutableListOf()
+        val tempList: MutableList<Restaurant> = mutableListOf()
         result.enqueue(object : Callback<ApiRestaurantResponse> {
             override fun onResponse(
                 call: Call<ApiRestaurantResponse>,
@@ -33,7 +32,7 @@ class MainViewModel : ViewModel() {
                 val restaurantSize = response.body()!!.total_entries
                 for (i in 0 until restaurantSize) {
                     val restaurant = convertTORestaurant(response.body()!!.restaurants[i])
-                    tempList+=restaurant
+                    tempList += restaurant
                 }
                 restaurantsByCountries.value = tempList
             }
