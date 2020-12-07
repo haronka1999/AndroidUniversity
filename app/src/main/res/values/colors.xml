@@ -13,4 +13,6 @@
     <color name="buttonColor">#6FC3D4</color>color>
     <color name="startblue">#00BFFF</color>color>
     <color name="endblue">#6495ED</color>color>
+    <color name="background">#225dab</color>color>
+    <color name="menu_background">#818b99</color>color>
 </resources>

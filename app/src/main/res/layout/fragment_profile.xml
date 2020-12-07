@@ -6,7 +6,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cardview_light_background"
+
+        android:background="@color/background"
         android:orientation="vertical"
         tools:context="main.fragments.ProfileFragment">
 
@@ -43,6 +44,7 @@
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:layout_marginTop="45dp"
             android:orientation="vertical">
 
@@ -58,13 +60,14 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_group_add_black_24dp" />
 
                 <TextView
                     android:id="@+id/userNameTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:paddingLeft="20dp"
                     android:text="Username"
                     android:textStyle="bold" />
@@ -78,9 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="55dp"
-            android:background="@drawable/buttonstyleithgradient"
+            android:background="@drawable/buttonstyle"
             android:text="Log Out"
-            android:textColor="#fff" />
+            android:textColor="#000000" />
 
     </LinearLayout>
 </layout>
