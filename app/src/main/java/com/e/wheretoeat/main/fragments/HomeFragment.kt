@@ -7,69 +7,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.api.MainViewModel
-import com.e.wheretoeat.main.api.MainViewModelFactory
-import com.e.wheretoeat.main.adapters.DataAdapter
-import com.e.wheretoeat.main.api.ApiRepository
-import com.e.wheretoeat.main.api.RetrofitInstance.BASE_URL
-import com.e.wheretoeat.main.api.SimpleApi
-import com.e.wheretoeat.main.models.ApiRestaurant
-import com.e.wheretoeat.main.models.Restaurant
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+//import com.e.wheretoeat.main.api.MainViewModelFactory
+import com.e.wheretoeat.main.adapters.RestaurantAdapter
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        initializeRecyclerView(binding)
 
-        readDataFromOpenTable()
+
+        viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
+            val list = viewModel.restaurantsByCountries.value!!
+            Log.d("Helo", "list : $list ")
+            val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
+            recyclerView.adapter = RestaurantAdapter(list)
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.setHasFixedSize(true)
+        })
+
+        getRestaurantsFromApi()
+
         return binding.root
     }
 
-    private fun initializeRecyclerView(binding: FragmentHomeBinding?) {
-        val list = generateDummyList(20)
-        val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-        recyclerView.adapter = DataAdapter(list)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.setHasFixedSize(true)
-    }
 
-    private fun readDataFromOpenTable() {
-        val repository = ApiRepository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+    private fun getRestaurantsFromApi() {
         viewModel.getAllRestaurants()
-        viewModel.getStats()
-
-
     }
-
-    private fun generateDummyList(size: Int): List<Restaurant> {
-
-        val list = ArrayList<Restaurant>()
-        for (i in 0 until size) {
-            val item =
-                Restaurant(i, "Name $i ", "Address $i", i.toDouble(), "image url comes here ...")
-            list += item
-        }
-        return list
-    }
-
 }

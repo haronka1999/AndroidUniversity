@@ -18,8 +18,7 @@
         <ImageView
             android:id="@+id/restaurantImageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            />
+            android:layout_height="150dp" />
 
         <TextView
             android:id="@+id/titleTextView"
