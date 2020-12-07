@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
@@ -19,7 +20,7 @@ import com.e.wheretoeat.main.api.MainViewModel
 import com.e.wheretoeat.main.models.Restaurant
 
 
-class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener{
+class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -33,7 +34,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener{
             val list = viewModel.restaurantsByCountries.value!!
             Log.d("Helo", "list : $list ")
             val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-            recyclerView.adapter = RestaurantAdapter(list,this@HomeFragment)
+            recyclerView.adapter = RestaurantAdapter(list, this@HomeFragment)
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
         })
@@ -49,6 +50,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener{
     }
 
     override fun onItemClick(item: Restaurant) {
-        Log.d("Helo", "klick on $item")
+        viewModel.currentRestaurant = item
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
     }
 }

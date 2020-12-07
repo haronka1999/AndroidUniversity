@@ -15,10 +15,11 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
-    private val apiRepository = ApiRepository()
-
-
+    //viewModel datas
     var restaurantsByCountries: MutableLiveData<MutableList<Restaurant>> = MutableLiveData()
+    lateinit var currentRestaurant: Restaurant
+
+    private val apiRepository = ApiRepository()
 
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
