@@ -30,16 +30,17 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
-            val list = viewModel.restaurantsByCountries.value!!
-            Log.d("Helo", "list : $list ")
-            val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-            recyclerView.adapter = RestaurantAdapter(list, this@HomeFragment)
-            recyclerView.layoutManager = LinearLayoutManager(activity)
-            recyclerView.setHasFixedSize(true)
-        })
+        val list = viewModel.restaurantsByCountries.value!!
+        Log.d("Helo", "list : $list ")
+        val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
+        recyclerView.adapter = RestaurantAdapter(list, this@HomeFragment)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.setHasFixedSize(true)
 
-        getRestaurantsFromApi()
+//        viewModel.restaurantsByCountries.observe(viewLifecycleOwner, Observer {
+//        })
+
+        //   getRestaurantsFromApi()
 
         return binding.root
     }

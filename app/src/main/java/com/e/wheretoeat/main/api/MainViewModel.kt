@@ -18,8 +18,9 @@ class MainViewModel : ViewModel() {
     //viewModel datas
     var restaurantsByCountries: MutableLiveData<MutableList<Restaurant>> = MutableLiveData()
     lateinit var currentRestaurant: Restaurant
-
     private val apiRepository = ApiRepository()
+
+
 
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
