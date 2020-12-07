@@ -1,5 +1,6 @@
 package com.e.wheretoeat.main.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +24,8 @@ class DetailFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
 
+
+        //set the attributes
         binding.restNameTextView.text = viewModel.currentApiRestaurant.name
         binding.imageView.setImageResource(R.drawable.food)
         val fullAddress =
@@ -32,6 +35,11 @@ class DetailFragment : Fragment() {
         val priceTag = "Price: ${viewModel.currentApiRestaurant.price}"
         binding.addressTextView.text = fullAddress
         binding.priceTextView.text = priceTag
+
+        binding.imageButton.setOnClickListener {
+            binding.imageButton.setBackgroundColor(Color.RED)
+        }
+
 
         return binding.root
     }

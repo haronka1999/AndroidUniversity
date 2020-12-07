@@ -15,6 +15,7 @@ import retrofit2.Response
 class MainViewModel : ViewModel() {
 
     //viewModel datas
+    var favoriteRestaurants :MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     var apiRestaurantsByCountries: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     lateinit var currentApiRestaurant: ApiRestaurant
     private val apiRepository = ApiRepository()
