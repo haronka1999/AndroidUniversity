@@ -17,7 +17,15 @@ import com.e.wheretoeat.main.api.MainViewModel
 import com.e.wheretoeat.main.api.MainViewModelFactory
 import com.e.wheretoeat.main.adapters.DataAdapter
 import com.e.wheretoeat.main.api.ApiRepository
+import com.e.wheretoeat.main.api.RetrofitInstance.BASE_URL
+import com.e.wheretoeat.main.api.SimpleApi
+import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.Restaurant
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class HomeFragment : Fragment() {
@@ -39,28 +47,26 @@ class HomeFragment : Fragment() {
         val list = generateDummyList(20)
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = DataAdapter(list)
-        recyclerView.layoutManager = LinearLayoutManager(activity )
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
     }
 
-    private  fun readDataFromOpenTable(){
+    private fun readDataFromOpenTable() {
         val repository = ApiRepository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getAllRestaurants("Dallas")
-        Log.d("Helo", "Itt vagy ? ")
-        viewModel.response.observe(viewLifecycleOwner, Observer { response ->
-            Log.d("Helo",response.toString());
-            Log.d("Helo",response.toString());
-            Log.d("Helo",response.toString());
-        })
+        viewModel.getAllRestaurants()
+        viewModel.getStats()
+
+
     }
 
     private fun generateDummyList(size: Int): List<Restaurant> {
 
         val list = ArrayList<Restaurant>()
         for (i in 0 until size) {
-            val item = Restaurant(i, "Name $i ","Address $i", i.toDouble(),"image url comes here ...")
+            val item =
+                Restaurant(i, "Name $i ", "Address $i", i.toDouble(), "image url comes here ...")
             list += item
         }
         return list
