@@ -10,20 +10,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.models.User
-import com.e.wheretoeat.main.viewmodels.MainViewModel
 import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 
 class RegisterFragment : Fragment() {
 
 
-    private val mUserViewModel: UserViewModel by activityViewModels()
-
+   // private val mUserViewModel: UserViewModel by activityViewModels()
+    private lateinit var mUserViewModel : UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var email: String
     private lateinit var userName: String
@@ -45,6 +44,8 @@ class RegisterFragment : Fragment() {
             R.layout.fragment_register, container, false
         )
 
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
         binding.saveButton.setOnClickListener {
             userName = binding.userNameEditText.text.toString()
@@ -61,14 +62,14 @@ class RegisterFragment : Fragment() {
             editor.apply()
 
             //add data to database
-            insertDatatoDatBase()
+            insertUserIntoDataBase()
             findNavController().navigate(R.id.action_registerFragment2_to_homeFragment)
 
         }
         return binding.root
     }
 
-    private fun insertDatatoDatBase() {
+    private fun insertUserIntoDataBase() {
         val user = User(0, userName, password)
         mUserViewModel.addUser(user)
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()

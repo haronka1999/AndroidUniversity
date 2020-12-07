@@ -14,13 +14,13 @@ import kotlinx.coroutines.launch
 
 //provide data to the UI
 //dispatcher between repo and UI
-class UserViewModel(application: Application) : ViewModel() {
+class UserViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val readAllData: LiveData<List<User>>
     private val repository: UserRepository
 
-    init {
+     init {
         val userDao = UserDataBase.getDatabase(
             application
         ).userDao()
