@@ -1,6 +1,8 @@
 package com.e.wheretoeat.main.fragments
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
@@ -23,10 +25,14 @@ class RegisterFragment : Fragment() {
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
-    private lateinit var password: String
+    private lateinit var pictureUrl: String
     private var userNames: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
 
+    companion object {
+        //image pick code
+        val IMAGE_PICK_CODE = 1;
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,20 +46,24 @@ class RegisterFragment : Fragment() {
         )
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+
+
+
+        binding.chooseImageButton.setOnClickListener {
+            pickImageFromGallery()
+        }
+
         binding.saveButton.setOnClickListener {
             userName = binding.userNameEditText.text.toString()
-            password = binding.passwordEditText.text.toString()
-            if (!isValidForm(userName, password)) {
-                return@setOnClickListener
-            }
+//            if (!isValidForm(userName, password)) {
+//                return@setOnClickListener
+//            }
 
             //add the user details to shared preferences
             val editor = sharedPref.edit()
             editor.clear()
             editor.putString("username", userName)
-            editor.putString("password", password)
             editor.apply()
 
             //add data to database
@@ -63,6 +73,25 @@ class RegisterFragment : Fragment() {
         }
         return binding.root
     }
+
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            val imageUri = data.data!!
+            pictureUrl = imageUri.toString()
+            binding.registerProfileImage.setImageURI(imageUri)
+        }
+    }
+
 
     private fun insertUserIntoDataBase() {
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
@@ -76,21 +105,11 @@ class RegisterFragment : Fragment() {
         }
 
 
-        if (TextUtils.isEmpty(password)) {
-            binding.passwordEditText.error = "Password is Required"
-            return false
-        }
-
         if (userName.length >= 10) {
             binding.userNameEditText.error = "User name is too long"
             return false
         }
 
-
-        if (password.length < 6) {
-            binding.passwordEditText.error = "Password must be 6 character long"
-            return false
-        }
 
         if (userNames.contains(userName)) {
             binding.userNameEditText.error = "This Username is taken"
