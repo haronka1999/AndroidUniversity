@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
-import com.e.wheretoeat.main.models.ApiRestaurant
-import com.e.wheretoeat.main.viewmodels.UserViewModel
+import com.e.wheretoeat.main.data.User
+import com.e.wheretoeat.main.data.UserViewModel
 
 
 class RegisterFragment : Fragment() {
@@ -25,6 +25,9 @@ class RegisterFragment : Fragment() {
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
+    private lateinit var address: String
+    private lateinit var phone: String
+    private lateinit var email: String
     private lateinit var pictureUrl: String
     private var userNames: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
@@ -48,14 +51,15 @@ class RegisterFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
-
-
         binding.chooseImageButton.setOnClickListener {
             pickImageFromGallery()
         }
 
         binding.saveButton.setOnClickListener {
             userName = binding.userNameEditText.text.toString()
+            address = binding.addressEditText.text.toString()
+            phone = binding.phoneNumber.text.toString()
+            email = binding.emailEditText.text.toString()
 //            if (!isValidForm(userName, password)) {
 //                return@setOnClickListener
 //            }
@@ -64,6 +68,9 @@ class RegisterFragment : Fragment() {
             val editor = sharedPref.edit()
             editor.clear()
             editor.putString("username", userName)
+            editor.putString("address", address)
+            editor.putString("phone", phone)
+            editor.putString("email", email)
             editor.apply()
 
             //add data to database
@@ -72,6 +79,12 @@ class RegisterFragment : Fragment() {
 
         }
         return binding.root
+    }
+
+    private fun insertUserIntoDataBase() {
+        val user = User(0,userName,pictureUrl,address,phone,email)
+        mUserViewModel.addUser(user)
+        Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
     private fun pickImageFromGallery() {
@@ -93,9 +106,7 @@ class RegisterFragment : Fragment() {
     }
 
 
-    private fun insertUserIntoDataBase() {
-        Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
-    }
+
 
 
     private fun isValidForm(userName: String, password: String): Boolean {
