@@ -4,33 +4,37 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.User
 import com.e.wheretoeat.main.data.UserViewModel
+import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
 class RegisterFragment : Fragment() {
-
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
     private lateinit var address: String
     private lateinit var phone: String
     private lateinit var email: String
-    private lateinit var pictureUrl: String
     private var userNames: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
+    private lateinit var imageUri: Uri
 
     companion object {
         //image pick code
@@ -71,6 +75,7 @@ class RegisterFragment : Fragment() {
             editor.putString("address", address)
             editor.putString("phone", phone)
             editor.putString("email", email)
+            editor.putString("pictureUrl", imageUri.toString())
             editor.apply()
 
             //add data to database
@@ -82,7 +87,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun insertUserIntoDataBase() {
-        val user = User(0,userName,pictureUrl,address,phone,email)
+        val user = User(0, userName, imageUri.toString(), address, phone, email)
         mUserViewModel.addUser(user)
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
@@ -99,14 +104,10 @@ class RegisterFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            val imageUri = data.data!!
-            pictureUrl = imageUri.toString()
+            imageUri = data.data!!
             binding.registerProfileImage.setImageURI(imageUri)
         }
     }
-
-
-
 
 
     private fun isValidForm(userName: String, password: String): Boolean {

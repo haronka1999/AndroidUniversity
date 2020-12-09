@@ -1,10 +1,12 @@
 package com.e.wheretoeat.main.viewmodels
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.main.api.ApiRepository
+import com.e.wheretoeat.main.data.User
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
 import kotlinx.coroutines.launch
@@ -14,13 +16,15 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
-    //viewModel datas
+    //viewModel data
+    var users : MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants :MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     var apiRestaurantsByCountries: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     lateinit var currentApiRestaurant: ApiRestaurant
+
+
+
     private val apiRepository = ApiRepository()
-
-
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
         val tempListApiRestaurant: MutableList<ApiRestaurant> = mutableListOf()
