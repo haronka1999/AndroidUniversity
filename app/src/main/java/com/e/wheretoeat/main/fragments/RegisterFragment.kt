@@ -14,13 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
-import com.e.wheretoeat.main.models.User
+import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var mUserViewModel : UserViewModel
+    private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
     private lateinit var password: String
@@ -65,8 +65,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun insertUserIntoDataBase() {
-        val user = User(0, userName, password)
-        mUserViewModel.addUser(user)
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 

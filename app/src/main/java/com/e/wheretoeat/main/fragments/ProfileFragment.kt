@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentProfileBinding
-import com.e.wheretoeat.main.models.User
 import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 class ProfileFragment : Fragment() {
@@ -28,13 +27,13 @@ class ProfileFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
-
-            //user[0] because user is a list and now I only have 1 user
-            binding.userNameTextView.text = user[0].userName
-
-        })
+//        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+//        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
+//
+//            //user[0] because user is a list and now I only have 1 user
+//            binding.userNameTextView.text = user[0].userName
+//
+//        })
 
         binding.logOutButton.setOnClickListener {
             val settings =

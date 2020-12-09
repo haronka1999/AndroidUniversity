@@ -1,5 +1,6 @@
 package com.e.wheretoeat.main.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     ): View? {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
 
         val apiList = viewModel.apiRestaurantsByCountries.value!!
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
