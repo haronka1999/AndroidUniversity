@@ -42,12 +42,16 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
         //Log.d("Helo", "home userid ${mUserViewModel.currentUserId.value}")
 
-        val apiList = mainViewModel.apiRestaurantsByCountries.value!!
+        val apiList = mainViewModel.apiRestaurants.value!!
         //val apiList = mutableListOf<ApiRestaurant>()
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
+
+
+
+        Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
 
         return binding.root
     }

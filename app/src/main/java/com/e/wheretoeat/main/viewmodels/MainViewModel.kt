@@ -1,6 +1,5 @@
 package com.e.wheretoeat.main.viewmodels
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,14 +12,13 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class MainViewModel : ViewModel() {
 
     //viewModel data
     var users: MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-    var apiRestaurantsByCountries: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
+    var apiRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     lateinit var currentApiRestaurant: ApiRestaurant
 
 
@@ -47,18 +45,14 @@ class MainViewModel : ViewModel() {
             ) {
                 try {
                     Log.d("Helo", "Onresponse - okay ! ")
-                    Log.d("Helo", "${response.body()}")
-                    Log.d("Helo", "$response")
-                    Log.d("Helo", "${response.body()!!.total_entries}")
-
                     val restaurantSize = response.body()!!.restaurants.size
-
                     Log.d("Helo", "size; $restaurantSize")
                     for (i in 0 until restaurantSize) {
                         val apiRestaurant = response.body()!!.restaurants[i]
                         tempListApiRestaurant += apiRestaurant
+                        Log.d("Helo", apiRestaurant.image_url)
                     }
-                    apiRestaurantsByCountries.value = tempListApiRestaurant
+                    apiRestaurants.value = tempListApiRestaurant
                 } catch (e: Exception) {
                     Log.d("Helo", "Onresponse catch: ${e.message}")
                 }

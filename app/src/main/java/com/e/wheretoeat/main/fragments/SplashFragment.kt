@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentSplashBinding
@@ -29,7 +28,7 @@ class SplashFragment : Fragment() {
 //        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
 
         //if the restaurant data is loaded go to home
-        viewModel.apiRestaurantsByCountries.observe(viewLifecycleOwner, {
+        viewModel.apiRestaurants.observe(viewLifecycleOwner, {
             sharedPref =
                 context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
             val credentials = sharedPref.all

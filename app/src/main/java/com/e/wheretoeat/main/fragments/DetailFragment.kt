@@ -1,7 +1,7 @@
 package com.e.wheretoeat.main.fragments
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +15,7 @@ import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 class DetailFragment : Fragment() {
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentDetailBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,18 +26,20 @@ class DetailFragment : Fragment() {
 
 
         //set the attributes
-        binding.restNameTextView.text = viewModel.currentApiRestaurant.name
+        binding.restNameTextView.text = mainViewModel.currentApiRestaurant.name
         binding.imageView.setImageResource(R.drawable.food)
         val fullAddress =
-            "Address: ${viewModel.currentApiRestaurant.country}," +
-                    " ${viewModel.currentApiRestaurant.city},\n" +
-                    viewModel.currentApiRestaurant.address
-        val priceTag = "Price: ${viewModel.currentApiRestaurant.price}"
+            "Address: ${mainViewModel.currentApiRestaurant.country}," +
+                    " ${mainViewModel.currentApiRestaurant.city},\n" +
+                    mainViewModel.currentApiRestaurant.address
+        val priceTag = "Price: ${mainViewModel.currentApiRestaurant.price}"
         binding.addressTextView.text = fullAddress
         binding.priceTextView.text = priceTag
 
+        Log.d("Helo", "Curentrest: ${mainViewModel.currentApiRestaurant}")
         binding.imageButton.setOnClickListener {
-            binding.imageButton.setBackgroundColor(Color.RED)
+            binding.imageButton.setImageResource(R.drawable.ic_love_red)
+         //   mainViewModel.favoriteRestaurants.value!!.add(mainViewModel.currentApiRestaurant)
         }
 
 

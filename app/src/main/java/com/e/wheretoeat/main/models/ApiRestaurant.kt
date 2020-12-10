@@ -5,15 +5,19 @@ import androidx.room.PrimaryKey
 data class ApiRestaurant(
     @PrimaryKey
     val id: Int,
-    val price: Double,
     val name: String,
     val address: String,
-    val state: String,
     val city: String,
-    val zip: Int,
+    val area: String,
+    val postal_code: Int,
     val country: String,
-    val page: Int,
-    val per_page: Int
+    val phone: String,
+    val lat: String,
+    val lng: String,
+    val price: Double,
+    val reserve_url: String,
+    val mobile_reserve_url: String,
+    val image_url: String,
 ) {
 
 

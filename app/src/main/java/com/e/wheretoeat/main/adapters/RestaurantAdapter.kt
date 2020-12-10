@@ -1,27 +1,30 @@
 package com.e.wheretoeat.main.adapters
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.main.models.ApiRestaurant
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import java.net.URL
 
 
 class RestaurantAdapter(
     private var list: MutableList<ApiRestaurant>,
-    private val listener: OnItemClickListener
+    private val listener: OnItemClickListener,
 ) :
     RecyclerView.Adapter<RestaurantAdapter.DataViewHolder>() {
 
 
     // 1. user defined ViewHolder type
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val addressTextView: TextView = itemView.findViewById(R.id.addressTextView)
         val imageView: ImageView = itemView.findViewById(R.id.restaurantImageView)
@@ -43,6 +46,7 @@ class RestaurantAdapter(
         fun onItemClick(item: ApiRestaurant)
     }
 
+
     // 2. Called only a few times = number of items on screen + a few more ones
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView =
@@ -55,14 +59,13 @@ class RestaurantAdapter(
         val currentItem = list[position]
         holder.titleTextView.text = currentItem.name
         holder.imageView.setImageResource(R.drawable.food)
+
         holder.priceView.text = currentItem.price.toString()
         holder.addressTextView.text = currentItem.address
-
 
     }
 
     // 4.
     override fun getItemCount() = list.size
-
-
 }
+
