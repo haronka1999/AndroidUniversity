@@ -8,10 +8,10 @@ import retrofit2.http.GET
 interface SimpleApi {
 
     //this function wll return restaurants in a city
-    @GET("restaurants?country=AW")
+    @GET("restaurants")
     fun getAllRestaurants(): Call<ApiRestaurantResponse>
 
-    @GET("restaurants/107257")
+    @GET("restaurants")
     fun getStats(): Call<ApiRestaurant>
 
 }

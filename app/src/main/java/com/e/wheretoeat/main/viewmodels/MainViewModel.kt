@@ -46,18 +46,22 @@ class MainViewModel : ViewModel() {
                 response: Response<ApiRestaurantResponse>
             ) {
                 try {
-                    val restaurantSize = response.body()!!.total_entries
+                    Log.d("Helo", "Onresponse - okay ! ")
+                    Log.d("Helo", "${response.body()}")
+                    Log.d("Helo", "$response")
+                    Log.d("Helo", "${response.body()!!.total_entries}")
+
+                    val restaurantSize = response.body()!!.restaurants.size
+
+                    Log.d("Helo", "size; $restaurantSize")
                     for (i in 0 until restaurantSize) {
                         val apiRestaurant = response.body()!!.restaurants[i]
-
                         tempListApiRestaurant += apiRestaurant
                     }
                     apiRestaurantsByCountries.value = tempListApiRestaurant
-
                 } catch (e: Exception) {
                     Log.d("Helo", "Onresponse catch: ${e.message}")
                 }
-
             }
 
             override fun onFailure(call: Call<ApiRestaurantResponse>, t: Throwable) {

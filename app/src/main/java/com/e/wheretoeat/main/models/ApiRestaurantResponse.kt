@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 data class ApiRestaurantResponse(
     @SerializedName("total_entries")
     val total_entries: Int,
+    @SerializedName("page")
+    val page: Int,
     @SerializedName("per_page")
-    val per_page: Int,
-    @SerializedName("current_page")
     val current_page: Int,
     @SerializedName("restaurants")
     val restaurants : List<ApiRestaurant>

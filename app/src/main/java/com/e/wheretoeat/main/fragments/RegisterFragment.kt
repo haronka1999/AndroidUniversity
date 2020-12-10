@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
@@ -28,6 +29,8 @@ import java.io.InputStream
 
 
 class RegisterFragment : Fragment() {
+
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
@@ -93,8 +96,13 @@ class RegisterFragment : Fragment() {
 
     private fun insertUserIntoDataBase() {
         val user = User(0, userName, imageUri.toString(), address, phone, email)
-        val id = mUserViewModel.addUser(user)
-        Log.d("Helo", "userid: $id")
+        Log.d("Helo", "itt vagy ? ")
+        mUserViewModel.currentUserId.observe(viewLifecycleOwner, Observer {
+            Log.d("Helo", "id: register ${mUserViewModel.currentUserId.value}")
+
+        })
+        val currentUserId = mUserViewModel.addUser(user)
+        Log.d("Helo", "userid - registerfragmnent ${currentUserId.value}")
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
@@ -116,7 +124,7 @@ class RegisterFragment : Fragment() {
                 requireContext().contentResolver.openInputStream(imageUri)!!
             bitmap = BitmapFactory.decodeStream(inpStream)
             inpStream.close()
-            Log.d("Helo", "bitmaP: $bitmap")
+            //Log.d("Helo", "bitmaP: $bitmap")
         }
     }
 

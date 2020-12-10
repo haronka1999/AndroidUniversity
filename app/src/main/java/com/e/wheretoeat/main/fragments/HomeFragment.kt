@@ -40,10 +40,10 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
-        //mUserViewModel.getCurrentUserId(sharedPref.getString("username", "").toString())
+        //Log.d("Helo", "home userid ${mUserViewModel.currentUserId.value}")
 
-        //val apiList = mainViewModel.apiRestaurantsByCountries.value!!
-        val apiList = mutableListOf<ApiRestaurant>()
+        val apiList = mainViewModel.apiRestaurantsByCountries.value!!
+        //val apiList = mutableListOf<ApiRestaurant>()
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)

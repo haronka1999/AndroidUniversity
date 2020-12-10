@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
 
         val bitmapString = sharedPref.getString("pictureUrl", "").toString()
         val img: ByteArray = bitmapString.toByteArray()
-        Log.d("Helo", "img: $img")
+        //Log.d("Helo", "img: $img")
 
         binding.userNameTextView.text = userName
         binding.addressTextView.text = address
