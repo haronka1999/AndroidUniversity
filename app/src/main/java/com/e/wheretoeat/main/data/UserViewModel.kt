@@ -1,6 +1,7 @@
 package com.e.wheretoeat.main.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -19,7 +20,13 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addUser(user)
+        }
+    }
+
+    fun updateUser(user : User){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateUser(user)
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.e.wheretoeat.main.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,10 +32,11 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         fillUsers()
-        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        val apiList = mainViewModel.apiRestaurantsByCountries.value!!
+        //val apiList = mainViewModel.apiRestaurantsByCountries.value!!
+        val apiList = mutableListOf<ApiRestaurant>()
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -42,6 +44,8 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
         return binding.root
     }
+
+
 
 
     override fun onItemClick(item: ApiRestaurant) {

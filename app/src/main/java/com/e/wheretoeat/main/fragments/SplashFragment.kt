@@ -20,24 +20,35 @@ class SplashFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var sharedPref: SharedPreferences
     private lateinit var binding: FragmentSplashBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-       // requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_splash,container,false)
-        //if the restaurant data is loaded go to home
-        viewModel.apiRestaurantsByCountries.observe(viewLifecycleOwner, Observer {
-            sharedPref =
-                context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-            val credentials = sharedPref.all
-            if (credentials.isEmpty()) {
-                findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-            }
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
+//        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
 
-        })
+        sharedPref =
+            context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+        val credentials = sharedPref.all
+        if (credentials.isEmpty()) {
+            findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
+        } else {
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+        }
+
+        //if the restaurant data is loaded go to home
+//        viewModel.apiRestaurantsByCountries.observe(viewLifecycleOwner, {
+//            sharedPref =
+//                context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+//            val credentials = sharedPref.all
+//            if (credentials.isEmpty()) {
+//                findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
+//            } else {
+//                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+//            }
+//
+//        })
 
         //get all of the restaurants
         viewModel.getAllRestaurants()

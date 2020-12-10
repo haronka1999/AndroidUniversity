@@ -13,16 +13,28 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class MainViewModel : ViewModel() {
 
     //viewModel data
-    var users : MutableLiveData<MutableList<User>> = MutableLiveData()
-    var favoriteRestaurants :MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
+    var users: MutableLiveData<MutableList<User>> = MutableLiveData()
+    var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     var apiRestaurantsByCountries: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     lateinit var currentApiRestaurant: ApiRestaurant
 
 
+    //This variable will be used to define which data will be updated:
+
+    //0 ---> username
+    //1 ---> address
+    //2 ---> phone
+    //3 ---> email
+    var dataBeEdited = -1
+
+    /*
+    The functions below will need for the database queries
+     */
 
     private val apiRepository = ApiRepository()
     fun getAllRestaurants() {
@@ -33,13 +45,19 @@ class MainViewModel : ViewModel() {
                 call: Call<ApiRestaurantResponse>,
                 response: Response<ApiRestaurantResponse>
             ) {
-                val restaurantSize = response.body()!!.total_entries
-                for (i in 0 until restaurantSize) {
-                    val apiRestaurant = response.body()!!.restaurants[i]
+                try {
+                    val restaurantSize = response.body()!!.total_entries
+                    for (i in 0 until restaurantSize) {
+                        val apiRestaurant = response.body()!!.restaurants[i]
 
-                    tempListApiRestaurant += apiRestaurant
+                        tempListApiRestaurant += apiRestaurant
+                    }
+                    apiRestaurantsByCountries.value = tempListApiRestaurant
+
+                } catch (e: Exception) {
+                    Log.d("Helo", "Onresponse catch: ${e.message}")
                 }
-                apiRestaurantsByCountries.value = tempListApiRestaurant
+
             }
 
             override fun onFailure(call: Call<ApiRestaurantResponse>, t: Throwable) {

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -22,10 +24,10 @@ import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.User
 import com.e.wheretoeat.main.data.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
+import java.io.InputStream
 
 
 class RegisterFragment : Fragment() {
-    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userName: String
@@ -35,6 +37,7 @@ class RegisterFragment : Fragment() {
     private var userNames: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
     private lateinit var imageUri: Uri
+    private lateinit var bitmap: Bitmap
 
     companion object {
         //image pick code
@@ -46,7 +49,7 @@ class RegisterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
+        //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_register, container, false
@@ -57,6 +60,7 @@ class RegisterFragment : Fragment() {
 
         binding.chooseImageButton.setOnClickListener {
             pickImageFromGallery()
+
         }
 
         binding.saveButton.setOnClickListener {
@@ -64,6 +68,7 @@ class RegisterFragment : Fragment() {
             address = binding.addressEditText.text.toString()
             phone = binding.phoneNumber.text.toString()
             email = binding.emailEditText.text.toString()
+
 //            if (!isValidForm(userName, password)) {
 //                return@setOnClickListener
 //            }
@@ -75,7 +80,7 @@ class RegisterFragment : Fragment() {
             editor.putString("address", address)
             editor.putString("phone", phone)
             editor.putString("email", email)
-            editor.putString("pictureUrl", imageUri.toString())
+            editor.putString("pictureUrl", bitmap.toString())
             editor.apply()
 
             //add data to database
@@ -106,6 +111,11 @@ class RegisterFragment : Fragment() {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
             binding.registerProfileImage.setImageURI(imageUri)
+            val inpStream: InputStream =
+                requireContext().contentResolver.openInputStream(imageUri)!!
+            bitmap = BitmapFactory.decodeStream(inpStream)
+            inpStream.close()
+            Log.d("Helo", "bitmaP: $bitmap")
         }
     }
 
@@ -122,12 +132,10 @@ class RegisterFragment : Fragment() {
             return false
         }
 
-
         if (userNames.contains(userName)) {
             binding.userNameEditText.error = "This Username is taken"
             return false
         }
-
         return true
     }
 

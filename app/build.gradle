@@ -1,8 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
+
 
 android {
 
@@ -38,6 +41,14 @@ android {
 }
 
 dependencies {
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
     implementation 'androidx.cardview:cardview:1.0.0'
     def nav_version = "2.3.2"
     def version_retrofit = "2.4.0"
