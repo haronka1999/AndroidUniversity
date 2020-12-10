@@ -17,7 +17,7 @@ interface UserDao {
     fun readAllData(): LiveData<List<User>>
 
     @Query("SELECT id FROM user_table WHERE userName = :currentUserName")
-    fun getCurrentUserId(currentUserName: String): LiveData<Int>
+    suspend fun getCurrentUserId(currentUserName: String): Int
 
 
 }

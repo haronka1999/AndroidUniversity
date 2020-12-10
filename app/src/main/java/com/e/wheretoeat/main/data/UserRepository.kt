@@ -8,12 +8,17 @@ class UserRepository(private val userDao: UserDao) {
 
     val readAllData: LiveData<List<User>> = userDao.readAllData()
 
-    suspend fun addUser(user: User) : Long{
-        userDao.addUser(user)
-        return user.id.toLong()
+
+    suspend fun getCurrentUserId(currentUserName: String): Int {
+        return userDao.getCurrentUserId(currentUserName)
     }
 
-    suspend fun updateUser(user : User){
+    suspend fun addUser(user: User): Long {
+        return userDao.addUser(user)
+            
+    }
+
+    suspend fun updateUser(user: User) {
         userDao.updateUser(user)
     }
 

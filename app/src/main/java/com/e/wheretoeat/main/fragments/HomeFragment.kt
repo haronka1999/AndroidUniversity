@@ -1,5 +1,7 @@
 package com.e.wheretoeat.main.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,7 +27,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
-
+    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +36,11 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         fillUsers()
         //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+
+        //mUserViewModel.getCurrentUserId(sharedPref.getString("username", "").toString())
 
         //val apiList = mainViewModel.apiRestaurantsByCountries.value!!
         val apiList = mutableListOf<ApiRestaurant>()
@@ -44,8 +51,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
         return binding.root
     }
-
-
 
 
     override fun onItemClick(item: ApiRestaurant) {

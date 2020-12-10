@@ -93,7 +93,8 @@ class RegisterFragment : Fragment() {
 
     private fun insertUserIntoDataBase() {
         val user = User(0, userName, imageUri.toString(), address, phone, email)
-        mUserViewModel.addUser(user)
+        val id = mUserViewModel.addUser(user)
+        Log.d("Helo", "userid: $id")
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
