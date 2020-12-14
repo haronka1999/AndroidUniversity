@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentDetailBinding
 import com.e.wheretoeat.main.data.restaurant.Restaurant
@@ -31,7 +32,7 @@ class DetailFragment : Fragment() {
 
         //check if the current article is in the favorites
         if(mainViewModel.favoriteRestaurants.value!!.contains(mainViewModel.currentApiRestaurant)){
-            binding.imageButton.setImageResource(R.drawable.ic_love_red)
+            binding.addToFav.setImageResource(R.drawable.ic_love_red)
         }
 
         //set the attributes
@@ -47,12 +48,15 @@ class DetailFragment : Fragment() {
         binding.priceTextView.text = priceTag
 
 
-        binding.imageButton.setOnClickListener {
-            binding.imageButton.setImageResource(R.drawable.ic_love_red)
+        binding.addressTextView.setOnClickListener {
+            binding.addToFav.setImageResource(R.drawable.ic_love_red)
             mainViewModel.favoriteRestaurants.value!!.add(mainViewModel.currentApiRestaurant)
-
             //add an entity to the restaurant table
             mRestViewModel.addRestaurant(mainViewModel.castToEntityRestaurant(mainViewModel.currentApiRestaurant))
+        }
+
+        binding.showOnMap.setOnClickListener{
+            findNavController().navigate(R.id.action_detailFragment_to_mapsFragment)
         }
 
         return binding.root

@@ -51,7 +51,11 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.e.wheretoeat.main.fragments.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment" >
+        <action
+            android:id="@+id/action_detailFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment2"
         android:name="com.e.wheretoeat.main.fragments.RegisterFragment"
@@ -77,6 +81,11 @@
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.e.wheretoeat.main.fragments.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 
 
 </navigation>
