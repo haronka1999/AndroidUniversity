@@ -35,7 +35,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         fillUsers()
-        //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!

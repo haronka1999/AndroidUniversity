@@ -24,8 +24,8 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+      //  requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
-        //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         mainViewModel.favoriteRestaurants.value = mutableListOf()
 
         //if the restaurant data is loaded go to home
@@ -45,4 +45,5 @@ class SplashFragment : Fragment() {
         mainViewModel.getAllRestaurantsFromDropBox()
         return binding.root
     }
+
 }
