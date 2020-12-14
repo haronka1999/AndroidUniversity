@@ -21,7 +21,6 @@ class MainViewModel : ViewModel() {
     var apiRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     lateinit var currentApiRestaurant: ApiRestaurant
 
-
     //This variable will be used to define which data will be updated:
 
     //0 ---> username
@@ -33,7 +32,6 @@ class MainViewModel : ViewModel() {
     /*
     The functions below will need for the database queries
      */
-
     private val apiRepository = ApiRepository()
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
@@ -50,7 +48,6 @@ class MainViewModel : ViewModel() {
                     for (i in 0 until restaurantSize) {
                         val apiRestaurant = response.body()!!.restaurants[i]
                         tempListApiRestaurant += apiRestaurant
-                        Log.d("Helo", apiRestaurant.image_url)
                     }
                     apiRestaurants.value = tempListApiRestaurant
                 } catch (e: Exception) {

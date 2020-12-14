@@ -76,6 +76,10 @@ class ProfileFragment : Fragment() {
         binding.phoneTextView.text = phone
         binding.emailTextView.text = email
 
+        binding.favoriteButton.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_favoriteFragment)
+        }
+
         binding.logOutButton.setOnClickListener {
             val settings =
                 requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE)
