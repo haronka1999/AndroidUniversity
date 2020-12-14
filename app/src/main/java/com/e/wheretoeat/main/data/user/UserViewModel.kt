@@ -14,15 +14,15 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
+
+    var currentUserId: MutableLiveData<Long> = MutableLiveData()
     val readAllData: LiveData<List<User>>
+
     private var sharedPref: SharedPreferences =
         application.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
     private var editor = sharedPref.edit()
     private val repository: UserRepository
-    var id by Delegates.notNull<Long>()
-
-    var currentUserId: MutableLiveData<Long> = MutableLiveData()
-
+    private var id by Delegates.notNull<Long>()
 
     init {
         val userDao = MyDatabase.getDatabase(application).userDao()
@@ -38,6 +38,13 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
         return currentUserId
     }
+
+    fun getCurrentUserId(currentUserName : String){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getCurrentUserId(currentUserName)
+        }
+    }
+
 
     fun updateUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {

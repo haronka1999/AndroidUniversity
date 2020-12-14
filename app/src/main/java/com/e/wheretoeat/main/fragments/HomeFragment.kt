@@ -28,7 +28,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
-
     private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
@@ -39,45 +38,16 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
-
         val apiList = mainViewModel.apiRestaurants.value!!
-        // val apiList = generateDummyList(10)
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
-        //  Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
+
         return binding.root
     }
-
-    private fun generateDummyList(size: Int): MutableList<ApiRestaurant> {
-        val list = ArrayList<ApiRestaurant>()
-        for (i in 0 until size) {
-            val item = ApiRestaurant(
-                0,
-                "Restaurant $i",
-                "Street ${i + 2}",
-                "City $i",
-                "Area $i",
-                "$i",
-                "Country $i",
-                "$i ${i + 2} ${i - 1}${2 * i}- $i$i$i$i",
-                "latitude",
-                "longitude",
-                i.toDouble(),
-                "randomurl1",
-                "randomurl2",
-                "randomurl3"
-            )
-            list += item
-        }
-        return list
-    }
-
 
     override fun onItemClick(item: ApiRestaurant) {
         mainViewModel.currentApiRestaurant = item

@@ -3,6 +3,7 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentEditDialogBinding
+import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 class EditDialogFragment : DialogFragment() {
@@ -20,7 +23,7 @@ class EditDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentEditDialogBinding
     private lateinit var sharedPref: SharedPreferences
     private val mainViewModel: MainViewModel by activityViewModels()
-
+    private lateinit var mUserViewModel: UserViewModel
     private lateinit var newValue: String
 
     override fun onCreateView(
@@ -28,11 +31,14 @@ class EditDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_dialog, container, false)
+
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+     //   Log.d("Helo", "id: ${mUserViewModel.id}")
+        Log.d("Helo", "currentUserIdInDataBase: ${mUserViewModel.currentUserId.value}")
+
         binding.cancelButton.setOnClickListener {
             dismiss()
         }
-
-
         binding.saveButton.setOnClickListener {
             newValue = binding.newValueEditText.text.toString()
             if (newValue == "") {

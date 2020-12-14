@@ -28,7 +28,6 @@ class SplashFragment : Fragment() {
         //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         mainViewModel.favoriteRestaurants.value = mutableListOf()
 
-
         //if the restaurant data is loaded go to home
         mainViewModel.apiRestaurants.observe(viewLifecycleOwner, {
             sharedPref =
