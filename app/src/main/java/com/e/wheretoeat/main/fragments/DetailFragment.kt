@@ -24,26 +24,28 @@ class DetailFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
 
+        //check if the current article is in the favorites
+        if(mainViewModel.favoriteRestaurants.value!!.contains(mainViewModel.currentApiRestaurant)){
+            binding.imageButton.setImageResource(R.drawable.ic_love_red)
+        }
+
         //set the attributes
-        binding.restNameTextView.text = mainViewModel.currentApiRestaurant.name
-        binding.imageView.setImageResource(R.drawable.food)
         val fullAddress =
             "Address: ${mainViewModel.currentApiRestaurant.country}," +
                     " ${mainViewModel.currentApiRestaurant.city},\n" +
                     mainViewModel.currentApiRestaurant.address
         val priceTag = "Price: ${mainViewModel.currentApiRestaurant.price}"
+
+        binding.restNameTextView.text = mainViewModel.currentApiRestaurant.name
+        binding.imageView.setImageResource(R.drawable.food)
         binding.addressTextView.text = fullAddress
         binding.priceTextView.text = priceTag
 
 
-        Log.d("Helo", "Curentrest: ${mainViewModel.currentApiRestaurant}")
         binding.imageButton.setOnClickListener {
             binding.imageButton.setImageResource(R.drawable.ic_love_red)
             mainViewModel.favoriteRestaurants.value!!.add(mainViewModel.currentApiRestaurant)
-            Log.d("Helo", "favorites: ${mainViewModel.favoriteRestaurants.value}")
         }
-
-
 
         return binding.root
     }

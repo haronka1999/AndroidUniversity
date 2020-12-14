@@ -30,6 +30,10 @@ class FavoriteFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
 
         val favoriteList = mainViewModel.favoriteRestaurants.value!!
+        if (favoriteList.isEmpty()) {
+            binding.emptyTextView.text = "You haven't added any favorite restaurant yet ! "
+        }
+
         val recyclerView: RecyclerView = binding!!.favoriteRecyclerView
         recyclerView.adapter = RestaurantAdapter(favoriteList, this@FavoriteFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)

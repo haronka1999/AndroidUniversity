@@ -9,9 +9,13 @@ import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
@@ -33,6 +37,74 @@ class MainViewModel : ViewModel() {
     The functions below will need for the database queries
      */
     private val apiRepository = ApiRepository()
+
+
+
+
+    fun getAllRestaurantsFromDropBox() {
+        val client = OkHttpClient()
+        val request =
+            Request.Builder().url("https://www.dropbox.com/s/2lfd0sh7puq41lx/restaurants.json?dl=1")
+                .build()
+        client.newCall(request).enqueue(object : Callback<List<ApiRestaurant>>,
+            okhttp3.Callback {
+            override fun onResponse(
+                call: Call<List<ApiRestaurant>>,
+                response: Response<List<ApiRestaurant>>
+            ) {
+                val myData = response.body()
+                Log.d("Helo", "onresponse 1  : $myData")
+            }
+
+            override fun onFailure(call: Call<List<ApiRestaurant>>, t: Throwable) {
+                Log.d("Helo", "onfailure 1 - ${t.message}")
+            }
+
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d("Helo", "onfailure 2 - ${e.message}")
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                // val myData = response.body()!!.string()
+                parseResponse(response.body()!!.string())
+                //   Log.d("Helo", "onresponse 2 : $myData")
+            }
+
+        })
+
+    }
+
+    fun parseResponse(response: String) {
+        var artist = ""
+        var image = ""
+        val restaurantList = ArrayList<ApiRestaurant>()
+        val jsonArray = JSONArray(response)
+        val restaurantSize = jsonArray.length()
+        // Log.d("Helo", "jsonarray: ${jsonArray.length()}")
+
+        (0 until restaurantSize).forEach { index ->
+            val jsonObject = jsonArray.getJSONObject(index)
+            val apiRestaurant = ApiRestaurant(
+                jsonObject.getString("id").toInt(),
+                jsonObject.getString("name"),
+                jsonObject.getString("address"),
+                jsonObject.getString("city"),
+                jsonObject.getString("area"),
+                jsonObject.getString("postal_code"),
+                jsonObject.getString("country"),
+                jsonObject.getString("phone"),
+                jsonObject.getString("lat"),
+                jsonObject.getString("lng"),
+                jsonObject.getString("price").toDouble(),
+                jsonObject.getString("reserve_url"),
+                jsonObject.getString("mobile_reserve_url"),
+                jsonObject.getString("image_url")
+            )
+            restaurantList.add(apiRestaurant)
+        }
+        apiRestaurants.postValue(restaurantList)
+    }
+
     fun getAllRestaurants() {
         val result = apiRepository.getAllRestaurants()
         val tempListApiRestaurant: MutableList<ApiRestaurant> = mutableListOf()
@@ -42,7 +114,7 @@ class MainViewModel : ViewModel() {
                 response: Response<ApiRestaurantResponse>
             ) {
                 try {
-                    Log.d("Helo", "Onresponse - okay ! ")
+                    Log.d("Helo", "Onresponse - okay !")
                     val restaurantSize = response.body()!!.restaurants.size
                     Log.d("Helo", "size; $restaurantSize")
                     for (i in 0 until restaurantSize) {
@@ -80,3 +152,6 @@ class MainViewModel : ViewModel() {
         }
     }
 }
+
+
+

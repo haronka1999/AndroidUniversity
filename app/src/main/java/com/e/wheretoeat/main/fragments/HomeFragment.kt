@@ -44,17 +44,38 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
 
-         val apiList = mainViewModel.apiRestaurants.value!!
-        //val apiList = mutableListOf<ApiRestaurant>()
+        val apiList = mainViewModel.apiRestaurants.value!!
+        // val apiList = generateDummyList(10)
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
-
-
-
-      //  Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
+        //  Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
         return binding.root
+    }
+
+    private fun generateDummyList(size: Int): MutableList<ApiRestaurant> {
+        val list = ArrayList<ApiRestaurant>()
+        for (i in 0 until size) {
+            val item = ApiRestaurant(
+                0,
+                "Restaurant $i",
+                "Street ${i + 2}",
+                "City $i",
+                "Area $i",
+                "$i",
+                "Country $i",
+                "$i ${i + 2} ${i - 1}${2 * i}- $i$i$i$i",
+                "latitude",
+                "longitude",
+                i.toDouble(),
+                "randomurl1",
+                "randomurl2",
+                "randomurl3"
+            )
+            list += item
+        }
+        return list
     }
 
 

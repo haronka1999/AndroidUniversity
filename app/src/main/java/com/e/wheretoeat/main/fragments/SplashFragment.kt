@@ -27,6 +27,8 @@ class SplashFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
         //requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         mainViewModel.favoriteRestaurants.value = mutableListOf()
+
+
         //if the restaurant data is loaded go to home
         mainViewModel.apiRestaurants.observe(viewLifecycleOwner, {
             sharedPref =
@@ -37,11 +39,11 @@ class SplashFragment : Fragment() {
             } else {
                 findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             }
-
         })
 
         //get all of the restaurants
-        mainViewModel.getAllRestaurants()
+       // mainViewModel.getAllRestaurants()
+        mainViewModel.getAllRestaurantsFromDropBox()
         return binding.root
     }
 }
