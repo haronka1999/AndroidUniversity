@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = binding.bottomNavigationView
         bottomNav?.setupWithNavController(navController)
 
+
+        //disable manually the bottomnavigation in splahfragment
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.splashFragment) {
                 bottomNav.visibility = View.GONE
