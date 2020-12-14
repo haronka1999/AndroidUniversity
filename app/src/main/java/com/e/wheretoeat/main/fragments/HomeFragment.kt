@@ -44,8 +44,8 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
 
-        // val apiList = mainViewModel.apiRestaurants.value!!
-        val apiList = mutableListOf<ApiRestaurant>()
+         val apiList = mainViewModel.apiRestaurants.value!!
+        //val apiList = mutableListOf<ApiRestaurant>()
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
