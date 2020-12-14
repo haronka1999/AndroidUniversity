@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.main.api.ApiRepository
-import com.e.wheretoeat.main.data.User
+import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
 import kotlinx.coroutines.launch

@@ -1,7 +1,8 @@
-package com.e.wheretoeat.main.data
+package com.e.wheretoeat.main.data.user
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.e.wheretoeat.main.data.user.User
 
 @Dao
 interface UserDao {

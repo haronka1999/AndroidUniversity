@@ -26,19 +26,19 @@ class SplashFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
 //        requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
-
+        sharedPref =
+            context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+        val credentials = sharedPref.all
+        if (credentials.isEmpty()) {
+            findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
+        } else {
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+        }
         //if the restaurant data is loaded go to home
-        viewModel.apiRestaurants.observe(viewLifecycleOwner, {
-            sharedPref =
-                context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-            val credentials = sharedPref.all
-            if (credentials.isEmpty()) {
-                findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-            }
-
-        })
+//        viewModel.apiRestaurants.observe(viewLifecycleOwner, {
+//
+//
+//        })
 
         //get all of the restaurants
         viewModel.getAllRestaurants()

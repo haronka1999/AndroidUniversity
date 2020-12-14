@@ -1,9 +1,11 @@
-package com.e.wheretoeat.main.models
+package com.e.wheretoeat.main.data.restaurant
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class ApiRestaurant(
-    @PrimaryKey
+@Entity(tableName = "restaurant_table")
+data class Restaurant(
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
     val address: String,
@@ -18,7 +20,4 @@ data class ApiRestaurant(
     val reserve_url: String,
     val mobile_reserve_url: String,
     val image_url: String
-) {
-
-
-}
+)

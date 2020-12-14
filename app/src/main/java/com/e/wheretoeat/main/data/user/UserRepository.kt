@@ -1,8 +1,8 @@
-package com.e.wheretoeat.main.data
+package com.e.wheretoeat.main.data.user
 
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
-import com.e.wheretoeat.main.viewmodels.MainViewModel
+import com.e.wheretoeat.main.data.user.User
+import com.e.wheretoeat.main.data.user.UserDao
 
 class UserRepository(private val userDao: UserDao) {
 

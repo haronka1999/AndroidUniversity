@@ -18,8 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
-import com.e.wheretoeat.main.data.User
-import com.e.wheretoeat.main.data.UserViewModel
+import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
+import com.e.wheretoeat.main.data.user.User
+import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
@@ -27,6 +28,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mRestViewModel: RestaurantViewModel
     private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
@@ -38,12 +40,12 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
-        //Log.d("Helo", "home userid ${mUserViewModel.currentUserId.value}")
 
-        val apiList = mainViewModel.apiRestaurants.value!!
-        //val apiList = mutableListOf<ApiRestaurant>()
+        // val apiList = mainViewModel.apiRestaurants.value!!
+        val apiList = mutableListOf<ApiRestaurant>()
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         recyclerView.adapter = RestaurantAdapter(apiList, this@HomeFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -51,8 +53,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
 
 
-        Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
-
+      //  Log.d("Helo", "favoriteRestaurants: ${mainViewModel.favoriteRestaurants.value}")
         return binding.root
     }
 

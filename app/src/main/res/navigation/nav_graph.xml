@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.e.wheretoeat.main.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -23,7 +23,7 @@
         android:id="@+id/profileFragment"
         android:name="com.e.wheretoeat.main.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_splashFragment"
             app:destination="@id/splashFragment" />
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.e.wheretoeat.main.fragments.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/registerFragment2"
         android:name="com.e.wheretoeat.main.fragments.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="RegisterFragment">
         <action
             android:id="@+id/action_registerFragment2_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -60,13 +60,10 @@
     <dialog
         android:id="@+id/editDialogFragment"
         android:name="com.e.wheretoeat.main.fragments.EditDialogFragment"
-        android:label="EditDialogFragment" >
+        android:label="EditDialogFragment">
         <action
             android:id="@+id/action_editDialogFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-        <argument
-            android:name="currentUser"
-            app:argType="com.e.wheretoeat.main.data.User" />
     </dialog>
 
 

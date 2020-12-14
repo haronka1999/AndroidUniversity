@@ -1,11 +1,11 @@
-package com.e.wheretoeat.main.data
+package com.e.wheretoeat.main.data.user
 
-import android.os.Parcelable
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
+
 @Entity(tableName = "user_table")
 data class User (
     @PrimaryKey(autoGenerate = true)
@@ -15,4 +15,4 @@ data class User (
     val address: String,
     val phone: String,
     val email: String
-):Parcelable
+)

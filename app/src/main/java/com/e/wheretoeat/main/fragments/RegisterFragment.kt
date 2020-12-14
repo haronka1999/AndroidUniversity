@@ -22,8 +22,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
-import com.e.wheretoeat.main.data.User
-import com.e.wheretoeat.main.data.UserViewModel
+import com.e.wheretoeat.main.data.user.User
+import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 import java.io.InputStream
 
