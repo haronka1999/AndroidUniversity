@@ -25,38 +25,25 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_maps, container, false)
         val view = binding.root
-        //(view.findViewById<View>(R.id.map) as MapFragment).getMapAsync(this)
 
-
-//        Log.d("Helo", "getMapAsync ? ")
-//        val mapFragment = requireFragmentManager().findFragmentById(R.id.map) as? SupportMapFragment
-        //  val mapFragment: SupportMapFragment? =childFragmentManager().findFragmentById(R.id.map) as SupportMapFragment?
         val mapFragment: SupportMapFragment? =
             childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+
         return view
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-
         map = googleMap!!
 
         val lat = mainViewModel.currentApiRestaurant.lat.toDouble()
         val lng = mainViewModel.currentApiRestaurant.lng.toDouble()
 
-        Log.d("Helo", "lat: $lat")
-        Log.d("Helo", "lng: $lng")
         val restTitle = mainViewModel.currentApiRestaurant.name
         val location = LatLng(lat, lng)
         map.addMarker(MarkerOptions().position(location).title(restTitle))
         map.moveCamera(CameraUpdateFactory.newLatLng(location))
-
-
-
     }
-
-
 }
