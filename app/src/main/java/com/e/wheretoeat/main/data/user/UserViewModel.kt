@@ -8,9 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.e.wheretoeat.main.data.user.User
-import com.e.wheretoeat.main.data.user.UserDatabase
-import com.e.wheretoeat.main.data.user.UserRepository
+import com.e.wheretoeat.main.data.MyDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
@@ -27,7 +25,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init {
-        val userDao = UserDatabase.getDatabase(application).userDao()
+        val userDao = MyDatabase.getDatabase(application).userDao()
         repository = UserRepository(userDao)
         readAllData = repository.readAllData
     }

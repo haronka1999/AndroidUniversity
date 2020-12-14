@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.R
+import com.e.wheretoeat.main.data.MyDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -21,7 +22,7 @@ class RestaurantViewModel(application: Application) : AndroidViewModel(applicati
     private val repository: RestaurantRepository
 
     init {
-        val restaurantDao = RestaurantDatabase.getDatabase(application).restaurantDao()
+        val restaurantDao = MyDatabase.getDatabase(application).restaurantDao()
         repository = RestaurantRepository(restaurantDao)
         readAllData = repository.readAllData
     }

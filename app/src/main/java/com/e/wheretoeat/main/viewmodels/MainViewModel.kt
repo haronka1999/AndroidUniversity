@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.main.api.ApiRepository
+import com.e.wheretoeat.main.data.restaurant.Restaurant
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.models.ApiRestaurantResponse
@@ -37,8 +38,6 @@ class MainViewModel : ViewModel() {
     The functions below will need for the database queries
      */
     private val apiRepository = ApiRepository()
-
-
 
 
     fun getAllRestaurantsFromDropBox() {
@@ -151,6 +150,23 @@ class MainViewModel : ViewModel() {
             })
         }
     }
+
+    fun castToEntityRestaurant(rest: ApiRestaurant) = Restaurant(
+        0,
+        rest.name,
+        rest.address,
+        rest.city,
+        rest.area,
+        rest.postal_code,
+        rest.country,
+        rest.phone,
+        rest.lat,
+        rest.lng,
+        rest.price,
+        rest.reserve_url,
+        rest.mobile_reserve_url,
+        rest.image_url
+    )
 }
 
 

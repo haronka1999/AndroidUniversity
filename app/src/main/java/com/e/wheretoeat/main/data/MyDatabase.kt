@@ -1,24 +1,26 @@
-package com.e.wheretoeat.main.data.restaurant
+package com.e.wheretoeat.main.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.e.wheretoeat.main.data.restaurant.Restaurant
+import com.e.wheretoeat.main.data.restaurant.RestaurantDao
+import com.e.wheretoeat.main.data.user.User
+import com.e.wheretoeat.main.data.user.UserDao
 
 
-@Database(entities = [Restaurant::class], version = 1, exportSchema = false)
-abstract class RestaurantDatabase : RoomDatabase() {
+@Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
+abstract class MyDatabase : RoomDatabase() {
 
+    abstract fun userDao(): UserDao
     abstract fun restaurantDao(): RestaurantDao
 
     companion object {
-        lateinit var activity: Context
-
         @Volatile
-        private var INSTANCE: RestaurantDatabase? = null
-        fun getDatabase(context: Context): RestaurantDatabase {
-            activity = context.applicationContext
+        private var INSTANCE: MyDatabase? = null
 
+        fun getDatabase(context: Context): MyDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -26,12 +28,12 @@ abstract class RestaurantDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    RestaurantDatabase::class.java,
-                    "restaurant_database"
+                    MyDatabase::class.java,
+                    "database2"
                 ).build()
-
                 INSTANCE = instance
                 return instance
+
             }
         }
     }

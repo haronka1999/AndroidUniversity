@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentDetailBinding
+import com.e.wheretoeat.main.data.restaurant.Restaurant
+import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
 class DetailFragment : Fragment() {
-
+    private lateinit var mRestViewModel: RestaurantViewModel
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentDetailBinding
     override fun onCreateView(
@@ -23,6 +26,8 @@ class DetailFragment : Fragment() {
     ): View? {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+
+        mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
         //check if the current article is in the favorites
         if(mainViewModel.favoriteRestaurants.value!!.contains(mainViewModel.currentApiRestaurant)){
@@ -45,6 +50,9 @@ class DetailFragment : Fragment() {
         binding.imageButton.setOnClickListener {
             binding.imageButton.setImageResource(R.drawable.ic_love_red)
             mainViewModel.favoriteRestaurants.value!!.add(mainViewModel.currentApiRestaurant)
+
+            //add an entity to the restaurant table
+            mRestViewModel.addRestaurant(mainViewModel.castToEntityRestaurant(mainViewModel.currentApiRestaurant))
         }
 
         return binding.root

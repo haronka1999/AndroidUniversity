@@ -11,7 +11,7 @@ data class Restaurant(
     val address: String,
     val city: String,
     val area: String,
-    val postal_code: Int,
+    val postal_code: String,
     val country: String,
     val phone: String,
     val lat: String,

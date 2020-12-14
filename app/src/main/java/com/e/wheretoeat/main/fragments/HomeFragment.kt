@@ -28,7 +28,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
-    private lateinit var mRestViewModel: RestaurantViewModel
+
     private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
 
 

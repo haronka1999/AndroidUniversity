@@ -42,7 +42,7 @@ class SplashFragment : Fragment() {
         })
 
         //get all of the restaurants
-       // mainViewModel.getAllRestaurants()
+        // mainViewModel.getAllRestaurants()
         mainViewModel.getAllRestaurantsFromDropBox()
         return binding.root
     }
