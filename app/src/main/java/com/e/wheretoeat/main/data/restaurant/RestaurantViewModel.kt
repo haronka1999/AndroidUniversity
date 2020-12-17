@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.R
 import com.e.wheretoeat.main.data.MyDatabase
+import com.e.wheretoeat.main.models.ApiRestaurant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -33,4 +34,39 @@ class RestaurantViewModel(application: Application) : AndroidViewModel(applicati
             repository.addRestaurant(restaurant)
         }
     }
+
+    fun restaurantToEntity(restaurant: Restaurant): ApiRestaurant =
+        ApiRestaurant(
+            restaurant.id,
+            restaurant.name,
+            restaurant.address,
+            restaurant.city,
+            restaurant.area,
+            restaurant.postal_code,
+            restaurant.country,
+            restaurant.phone,
+            restaurant.lat,
+            restaurant.lng,
+            restaurant.price,
+            restaurant.reserve_url,
+            restaurant.mobile_reserve_url,
+            restaurant.image_url
+        )
+
+    fun castToEntityRestaurant(rest: ApiRestaurant) = Restaurant(
+        0,
+        rest.name,
+        rest.address,
+        rest.city,
+        rest.area,
+        rest.postal_code,
+        rest.country,
+        rest.phone,
+        rest.lat,
+        rest.lng,
+        rest.price,
+        rest.reserve_url,
+        rest.mobile_reserve_url,
+        rest.image_url
+    )
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
+import com.e.wheretoeat.main.data.restaurant.Restaurant
 import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserViewModel
@@ -65,6 +66,8 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
             mainViewModel.users.value = tempList
         })
     }
+
+
 
 
 }

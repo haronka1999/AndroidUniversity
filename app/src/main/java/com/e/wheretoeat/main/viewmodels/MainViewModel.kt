@@ -151,22 +151,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun castToEntityRestaurant(rest: ApiRestaurant) = Restaurant(
-        0,
-        rest.name,
-        rest.address,
-        rest.city,
-        rest.area,
-        rest.postal_code,
-        rest.country,
-        rest.phone,
-        rest.lat,
-        rest.lng,
-        rest.price,
-        rest.reserve_url,
-        rest.mobile_reserve_url,
-        rest.image_url
-    )
+
 }
 
 
