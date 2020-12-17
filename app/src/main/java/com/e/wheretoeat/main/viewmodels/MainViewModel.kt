@@ -81,7 +81,7 @@ class MainViewModel : ViewModel() {
         val restaurantSize = jsonArray.length()
         // Log.d("Helo", "jsonarray: ${jsonArray.length()}")
 
-        (0 until 10).forEach { index ->
+        (0 until restaurantSize).forEach { index ->
             val jsonObject = jsonArray.getJSONObject(index)
             val apiRestaurant = ApiRestaurant(
                 jsonObject.getString("id").toInt(),

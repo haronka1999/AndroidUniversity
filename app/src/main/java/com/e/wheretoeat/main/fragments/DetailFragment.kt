@@ -1,18 +1,20 @@
 package com.e.wheretoeat.main.fragments
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentDetailBinding
-import com.e.wheretoeat.main.data.restaurant.Restaurant
 import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
@@ -27,12 +29,9 @@ class DetailFragment : Fragment() {
     ): View? {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
-
         mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
         //check if the current article is in the favorites
-        Log.d("Helo", "mainViewModel.favoriteRestaurants.value - detail ${mainViewModel.favoriteRestaurants.value}" )
-        Log.d("Helo", "currentRest - detail ${mainViewModel.currentApiRestaurant}" )
         if (mainViewModel.favoriteRestaurants.value!!.contains(mainViewModel.currentApiRestaurant)) {
             binding.addToFav.setImageResource(R.drawable.ic_love_red)
         }
@@ -48,7 +47,6 @@ class DetailFragment : Fragment() {
         binding.imageView.setImageResource(R.drawable.food)
         binding.addressTextView.text = fullAddress
         binding.priceTextView.text = priceTag
-
 
         binding.addToFav.setOnClickListener {
             Log.d("Helo", "need to be red")

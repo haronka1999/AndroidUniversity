@@ -54,32 +54,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/addressTextView" />
 
-        <ImageButton
-            android:id="@+id/addToFav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/priceTextView"
-            app:srcCompat="@drawable/ic_love_normal"
-            tools:layout_editor_absoluteX="294dp"
-            tools:layout_editor_absoluteY="25dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/priceTextView">
 
-        <ImageButton
-            android:id="@+id/showOnMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addToFav"
-            app:srcCompat="@drawable/ic_maps"
-            tools:layout_editor_absoluteX="273dp"
-            tools:layout_editor_absoluteY="398dp" />
 
+            <ImageButton
+                android:id="@+id/addToFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/priceTextView"
+                app:srcCompat="@drawable/ic_love_normal"
+                tools:layout_editor_absoluteX="294dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <ImageButton
+                android:id="@+id/showOnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addToFav"
+                app:srcCompat="@drawable/ic_maps"
+                tools:layout_editor_absoluteX="273dp"
+                tools:layout_editor_absoluteY="398dp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
