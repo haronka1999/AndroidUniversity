@@ -30,7 +30,6 @@ class DetailFragment : Fragment() {
 
         mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
-
         //check if the current article is in the favorites
         Log.d("Helo", "mainViewModel.favoriteRestaurants.value - detail ${mainViewModel.favoriteRestaurants.value}" )
         Log.d("Helo", "currentRest - detail ${mainViewModel.currentApiRestaurant}" )

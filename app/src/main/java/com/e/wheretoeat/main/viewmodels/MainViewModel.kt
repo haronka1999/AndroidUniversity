@@ -104,53 +104,6 @@ class MainViewModel : ViewModel() {
         apiRestaurants.postValue(restaurantList)
     }
 
-    fun getAllRestaurants() {
-        val result = apiRepository.getAllRestaurants()
-        val tempListApiRestaurant: MutableList<ApiRestaurant> = mutableListOf()
-        result.enqueue(object : Callback<ApiRestaurantResponse> {
-            override fun onResponse(
-                call: Call<ApiRestaurantResponse>,
-                response: Response<ApiRestaurantResponse>
-            ) {
-                try {
-                    Log.d("Helo", "Onresponse - okay !")
-                    val restaurantSize = response.body()!!.restaurants.size
-                    Log.d("Helo", "size; $restaurantSize")
-                    for (i in 0 until restaurantSize) {
-                        val apiRestaurant = response.body()!!.restaurants[i]
-                        tempListApiRestaurant += apiRestaurant
-                    }
-                    apiRestaurants.value = tempListApiRestaurant
-                } catch (e: Exception) {
-                    Log.d("Helo", "Onresponse catch: ${e.message}")
-                }
-            }
-
-            override fun onFailure(call: Call<ApiRestaurantResponse>, t: Throwable) {
-                Log.d("Helo", "onfailure - all restaurant: ${t.message}")
-            }
-        })
-    }
-
-
-    fun getStats() {
-        viewModelScope.launch {
-            val result = apiRepository.getStats()
-            result.enqueue(object : Callback<ApiRestaurant> {
-                override fun onFailure(call: Call<ApiRestaurant>, t: Throwable) {
-                    Log.d("Helo", "onfailure - one restaurant: ${t.message}")
-                }
-
-                override fun onResponse(
-                    call: Call<ApiRestaurant>,
-                    response: Response<ApiRestaurant>
-                ) {
-                    Log.d("Helo", "onResponse: ${response.body()}")
-                }
-            })
-        }
-    }
-
 
 }
 
