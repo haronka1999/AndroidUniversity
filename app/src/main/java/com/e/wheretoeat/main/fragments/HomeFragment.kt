@@ -3,11 +3,12 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
@@ -24,10 +24,7 @@ import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
-import com.e.wheretoeat.main.utils.PaginationListener
-import com.e.wheretoeat.main.utils.PaginationListener.Companion.PAGE_START
 import com.e.wheretoeat.main.viewmodels.MainViewModel
-import com.google.android.gms.common.api.Api
 
 
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
@@ -38,6 +35,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: RestaurantAdapter
     private lateinit var apiList: MutableList<ApiRestaurant>
+    private lateinit var cities: MutableList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +45,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
         apiList = mainViewModel.apiRestaurants.value!!
         adapter = RestaurantAdapter(apiList, this@HomeFragment)
+        cities = mainViewModel.cities
     }
 
 
@@ -54,18 +53,66 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fillUsers()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
+        fillUsers()
         setRecycleView()
-
-
+        setFilterSpinner()
+        setSortSpinner()
         return binding.root
+    }
+
+    private fun setSortSpinner() {
+        val sortByArray = listOf("Select", "City", "Price")
+        val adp =
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                sortByArray
+            )
+        binding.sortSpinner.adapter = adp
+        binding.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("Helo", "onitemselected sort spinner")
+                // apiList.sortBy { it.price }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+
+        }
+
+    }
+
+    private fun setFilterSpinner() {
+        val adp =
+            ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, cities)
+        binding.filterSpinner.adapter = adp
+        binding.filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("Helo", "onitemselecteed")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d("Helo", "onitemselecteed")
+            }
+
+        }
     }
 
     private fun setRecycleView() {
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-        // apiList.sortBy { it.price }
+
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager

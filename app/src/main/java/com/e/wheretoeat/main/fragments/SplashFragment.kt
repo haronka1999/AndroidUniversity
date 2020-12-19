@@ -51,8 +51,9 @@ class SplashFragment : Fragment() {
                 context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
             val credentials = sharedPref.all
             val restaurantsSize = mainViewModel.apiRestaurants.value!!.size
-            for (i in 0 until restaurantsSize){
-                mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i].city)
+            mainViewModel.cities.add(0,"City")
+            for (i in 1 until restaurantsSize+1){
+                mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i-1].city)
             }
             //delete duplicates
             mainViewModel.cities = mainViewModel.cities.distinct().toMutableList()
