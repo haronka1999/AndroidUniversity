@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,8 +33,8 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: RestaurantAdapter
-    private lateinit var apiList: MutableList<ApiRestaurant>
-    private lateinit var names: MutableList<String>
+    private lateinit var restaurants: MutableList<ApiRestaurant>
+    private lateinit var cities: MutableList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +42,9 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-        apiList = mainViewModel.apiRestaurants.value!!
-        adapter = RestaurantAdapter(apiList, this@HomeFragment)
-        names = mainViewModel.names
+        restaurants = mainViewModel.apiRestaurants.value!!
+        adapter = RestaurantAdapter(restaurants, this@HomeFragment)
+        cities = mainViewModel.cities
     }
 
 
@@ -86,14 +85,14 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 when (position) {
                     1 -> {
                         Log.d("Helo", "name")
-                        val sortedList = apiList.sortedBy { it.name }
+                        val sortedList = restaurants.sortedBy { it.name }
                         adapter = RestaurantAdapter(sortedList.toMutableList(), this@HomeFragment)
                         binding.restaurantRecyclerView.adapter = adapter
                     }
                     2 -> {
                         Log.d("Helo", "price")
-                        apiList.sortBy { it.price }
-                        adapter = RestaurantAdapter(apiList, this@HomeFragment)
+                        restaurants.sortBy { it.price }
+                        adapter = RestaurantAdapter(restaurants, this@HomeFragment)
                         binding.restaurantRecyclerView.adapter = adapter
                     }
                 }
@@ -106,7 +105,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     private fun setFilterSpinner() {
         val adp =
-            ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, names)
+            ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, cities)
         binding.filterSpinner.adapter = adp
         binding.filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -115,11 +114,31 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 position: Int,
                 id: Long
             ) {
-                Log.d("Helo", "onitemselecteed")
+                Log.d("Helo", "cities")
+
+                /*
+                When the screen is loaded automatically
+                will be called for the first item
+                which is empty so I need to handle this situation
+                 */
+                if (position == 0) {
+                    return
+                }
+
+                val currentCity = cities[position]
+                val filteredRestaurants = mutableListOf<ApiRestaurant>()
+                for (i in 0 until restaurants.size) {
+                    if (restaurants[i].city == currentCity) {
+                        filteredRestaurants.add(restaurants[i])
+                    }
+                }
+
+                adapter = RestaurantAdapter(filteredRestaurants, this@HomeFragment)
+                binding.restaurantRecyclerView.adapter = adapter
+                Log.d("Helo", "current pos: $position")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d("Helo", "onitemselecteed")
             }
 
         }

@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
     var restaurants: MutableList<ApiRestaurant> = mutableListOf()
     lateinit var currentApiRestaurant: ApiRestaurant
-    var names: MutableList<String> = mutableListOf()
+    var cities: MutableList<String> = mutableListOf()
 
     //This variable will be used to define which data will be updatedat the profile fragment
     //0 ---> username

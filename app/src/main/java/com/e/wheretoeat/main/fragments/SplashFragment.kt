@@ -49,12 +49,12 @@ class SplashFragment : Fragment() {
                 context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
             val credentials = sharedPref.all
             val restaurantsSize = mainViewModel.apiRestaurants.value!!.size
-            mainViewModel.names.add(0,"City")
+            mainViewModel.cities.add(0,"Choose City")
             for (i in 1 until restaurantsSize+1){
-                mainViewModel.names.add(i, mainViewModel.apiRestaurants.value!![i-1].city)
+                mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i-1].city)
             }
             //delete duplicates
-            mainViewModel.names = mainViewModel.names.distinct().toMutableList()
+            mainViewModel.cities = mainViewModel.cities.distinct().toMutableList()
 
             //this action was needed for solve the null pointer exception
             if (credentials.isEmpty()) {
