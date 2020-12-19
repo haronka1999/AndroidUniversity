@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
+import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
@@ -31,6 +33,7 @@ import com.google.android.gms.common.api.Api
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val mainViewModel: MainViewModel by activityViewModels()
+    private lateinit var restViewModel: RestaurantViewModel
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: RestaurantAdapter
@@ -43,9 +46,10 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         fillUsers()
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+        Log.d("Helo", "cities: ${mainViewModel.cities}")
 
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-        //   swipeRefresh.setOnRefreshListener(this);
         val apiList = mainViewModel.apiRestaurants.value!!
         val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
         adapter = RestaurantAdapter(apiList, this@HomeFragment)

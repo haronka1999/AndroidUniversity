@@ -45,9 +45,19 @@ class SplashFragment : Fragment() {
     private fun fillAllRestaurants() {
         //if the restaurant data is loaded go to home
         mainViewModel.apiRestaurants.observe(viewLifecycleOwner, {
+
+            Log.d("Helo", "apirestaurants: ${mainViewModel.apiRestaurants.value}")
             sharedPref =
                 context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
             val credentials = sharedPref.all
+            val restaurantsSize = mainViewModel.apiRestaurants.value!!.size
+            for (i in 0 until restaurantsSize){
+                mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i].city)
+            }
+            //delete duplicates
+            mainViewModel.cities = mainViewModel.cities.distinct().toMutableList()
+
+            //this action was needed for solve the null pointer exception
             if (credentials.isEmpty()) {
                 findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
             } else {
@@ -59,7 +69,6 @@ class SplashFragment : Fragment() {
         // mainViewModel.getAllRestaurants()
         mainViewModel.getAllRestaurantsFromDropBox()
     }
-
 
 
 }

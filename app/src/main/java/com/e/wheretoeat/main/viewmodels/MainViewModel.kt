@@ -20,30 +20,26 @@ import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
-    //viewModel data
+    var apiRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
+
+    //viewModel data:
     var users: MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-    var apiRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
+    var restaurants : MutableList<ApiRestaurant> = mutableListOf()
     lateinit var currentApiRestaurant: ApiRestaurant
-
-    //This variable will be used to define which data will be updated:
-
+    var cities : MutableList<String> = mutableListOf()
+    //This variable will be used to define which data will be updatedat the profile fragment
     //0 ---> username
     //1 ---> address
     //2 ---> phone
     //3 ---> email
     var dataBeEdited = -1
 
-    /*
-    The functions below will need for the database queries
-     */
-    private val apiRepository = ApiRepository()
-
 
     fun getAllRestaurantsFromDropBox() {
         val client = OkHttpClient()
         val request =
-            Request.Builder().url("https://www.dropbox.com/s/2lfd0sh7puq41lx/restaurants.json?dl=1")
+            Request.Builder().url("https://www.dropbox.com/s/6ikkwxv62t2ey8z/restaurants.json?dl=1")
                 .build()
         client.newCall(request).enqueue(object : Callback<List<ApiRestaurant>>,
             okhttp3.Callback {
@@ -74,12 +70,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun parseResponse(response: String) {
-        var artist = ""
-        var image = ""
         val restaurantList = ArrayList<ApiRestaurant>()
         val jsonArray = JSONArray(response)
         val restaurantSize = jsonArray.length()
-        // Log.d("Helo", "jsonarray: ${jsonArray.length()}")
 
         (0 until restaurantSize).forEach { index ->
             val jsonObject = jsonArray.getJSONObject(index)
@@ -103,8 +96,6 @@ class MainViewModel : ViewModel() {
         }
         apiRestaurants.postValue(restaurantList)
     }
-
-
 }
 
 
