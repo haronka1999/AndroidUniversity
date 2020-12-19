@@ -25,9 +25,10 @@ class MainViewModel : ViewModel() {
     //viewModel data:
     var users: MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-    var restaurants : MutableList<ApiRestaurant> = mutableListOf()
+    var restaurants: MutableList<ApiRestaurant> = mutableListOf()
     lateinit var currentApiRestaurant: ApiRestaurant
-    var cities : MutableList<String> = mutableListOf()
+    var cities: MutableList<String> = mutableListOf()
+
     //This variable will be used to define which data will be updatedat the profile fragment
     //0 ---> username
     //1 ---> address
@@ -39,7 +40,7 @@ class MainViewModel : ViewModel() {
     fun getAllRestaurantsFromDropBox() {
         val client = OkHttpClient()
         val request =
-            Request.Builder().url("https://www.dropbox.com/s/6ikkwxv62t2ey8z/restaurants.json?dl=1")
+            Request.Builder().url("https://www.dropbox.com/s/94t6su4cimnrdnt/restaurants.json?dl=1")
                 .build()
         client.newCall(request).enqueue(object : Callback<List<ApiRestaurant>>,
             okhttp3.Callback {
