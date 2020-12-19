@@ -35,7 +35,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: RestaurantAdapter
     private lateinit var apiList: MutableList<ApiRestaurant>
-    private lateinit var cities: MutableList<String>
+    private lateinit var names: MutableList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,14 +45,14 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
         apiList = mainViewModel.apiRestaurants.value!!
         adapter = RestaurantAdapter(apiList, this@HomeFragment)
-        cities = mainViewModel.cities
+        names = mainViewModel.names
     }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         fillUsers()
         setRecycleView()
@@ -62,7 +62,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     }
 
     private fun setSortSpinner() {
-        val sortByArray = listOf("Select", "City", "Price")
+        val sortByArray = listOf("Select", "Name", "Price")
         val adp =
             ArrayAdapter(
                 requireActivity(),
@@ -78,20 +78,35 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 id: Long
             ) {
                 Log.d("Helo", "onitemselected sort spinner")
-                // apiList.sortBy { it.price }
+                /*
+                Here I decide if I need to sort by name or price
+                1 --> name
+                2 --> price
+                 */
+                when (position) {
+                    1 -> {
+                        Log.d("Helo", "name")
+                        val sortedList = apiList.sortedBy { it.name }
+                        adapter = RestaurantAdapter(sortedList.toMutableList(), this@HomeFragment)
+                        binding.restaurantRecyclerView.adapter = adapter
+                    }
+                    2 -> {
+                        Log.d("Helo", "price")
+                        apiList.sortBy { it.price }
+                        adapter = RestaurantAdapter(apiList, this@HomeFragment)
+                        binding.restaurantRecyclerView.adapter = adapter
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
-
         }
-
     }
 
     private fun setFilterSpinner() {
         val adp =
-            ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, cities)
+            ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, names)
         binding.filterSpinner.adapter = adp
         binding.filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -111,8 +126,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     }
 
     private fun setRecycleView() {
-        val recyclerView: RecyclerView = binding!!.restaurantRecyclerView
-
+        val recyclerView: RecyclerView = binding.restaurantRecyclerView
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
@@ -128,7 +142,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     private fun fillUsers() {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
+        mUserViewModel.readAllData.observe(viewLifecycleOwner, { user ->
             val usersCount = user.size
             val tempList = mutableListOf<User>()
             for (i in 0 until usersCount) {
