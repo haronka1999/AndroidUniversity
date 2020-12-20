@@ -37,6 +37,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     //helper attributes
     private lateinit var restaurants: MutableList<ApiRestaurant>
+    private lateinit var filteredList: MutableList<ApiRestaurant>
     private lateinit var cities: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
         restaurants = mainViewModel.apiRestaurants.value!!
+        filteredList = mutableListOf()
         adapter = RestaurantAdapter(restaurants, this@HomeFragment)
         cities = mainViewModel.cities
     }
@@ -62,46 +64,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         setSortSpinner()
 
         return binding.root
-    }
-
-    private fun setSortSpinner() {
-        val sortByArray = listOf("Select", "Name", "Price")
-        val adp =
-            ArrayAdapter(
-                requireActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                sortByArray
-            )
-        binding.sortSpinner.adapter = adp
-        binding.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                /*
-                Here I decide if I need to sort by name or price
-                1 --> name
-                2 --> price
-                 */
-                when (position) {
-                    1 -> {
-                        val sortedList = restaurants.sortedBy { it.name }
-                        adapter = RestaurantAdapter(sortedList.toMutableList(), this@HomeFragment)
-                        binding.restaurantRecyclerView.adapter = adapter
-                    }
-                    2 -> {
-                        restaurants.sortBy { it.price }
-                        adapter = RestaurantAdapter(restaurants, this@HomeFragment)
-                        binding.restaurantRecyclerView.adapter = adapter
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
     }
 
     private fun setFilterSpinner() {
@@ -125,15 +87,62 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 }
 
                 val currentCity = cities[position]
-                val filteredRestaurants = mutableListOf<ApiRestaurant>()
+                val tempList = mutableListOf<ApiRestaurant>()
                 for (i in 0 until restaurants.size) {
                     if (restaurants[i].city == currentCity) {
-                        filteredRestaurants.add(restaurants[i])
+                        tempList.add(restaurants[i])
                     }
                 }
-
-                adapter = RestaurantAdapter(filteredRestaurants, this@HomeFragment)
+                filteredList = tempList
+                adapter = RestaurantAdapter(filteredList, this@HomeFragment)
                 binding.restaurantRecyclerView.adapter = adapter
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun setSortSpinner() {
+        val sortByArray = listOf("Select", "Name", "Price")
+        val adp =
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                sortByArray
+            )
+        binding.sortSpinner.adapter = adp
+        binding.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                val tempList = if(filteredList.isEmpty()){
+                    restaurants
+                }else{
+                    filteredList
+                }
+
+                /*
+                Here I decide if I need to sort by name or price
+                1 --> name
+                2 --> price
+                 */
+                when (position) {
+                    1 -> {
+                        val sortedList = tempList.sortedBy { it.name }
+                        adapter = RestaurantAdapter(sortedList.toMutableList(), this@HomeFragment)
+                        binding.restaurantRecyclerView.adapter = adapter
+                    }
+                    2 -> {
+                        tempList.sortBy { it.price }
+                        adapter = RestaurantAdapter(tempList, this@HomeFragment)
+                        binding.restaurantRecyclerView.adapter = adapter
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
