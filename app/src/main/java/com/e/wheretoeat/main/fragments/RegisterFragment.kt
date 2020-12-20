@@ -32,22 +32,34 @@ import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 class RegisterFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+
+    //viewmodels
     private lateinit var mUserViewModel: UserViewModel
+
+    //helpers
     private lateinit var binding: FragmentRegisterBinding
+    private lateinit var sharedPref: SharedPreferences
+    private var userNames: MutableList<String> = mutableListOf()
+
+    //attributes for the user
+    private lateinit var userId: String
     private lateinit var userName: String
     private lateinit var address: String
     private lateinit var phone: String
     private lateinit var email: String
-    private var userNames: MutableList<String> = mutableListOf()
-    private lateinit var sharedPref: SharedPreferences
     private lateinit var imageUri: Uri
-
+    private lateinit var editor: SharedPreferences.Editor
 
     companion object {
         const val IMAGE_PICK_CODE = 1;
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+        editor = sharedPref.edit()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,13 +67,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_register, container, false
-        )
-
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
         binding.chooseImageButton.setOnClickListener {
             pickImageFromGallery()
@@ -77,7 +83,7 @@ class RegisterFragment : Fragment() {
 //            }
 
             //add the user details to shared preferences
-            val editor = sharedPref.edit()
+
             editor.clear()
             editor.putString("image", imageUri.toString())
             editor.putString("username", userName)
@@ -90,7 +96,6 @@ class RegisterFragment : Fragment() {
             //add data to database
             insertUserIntoDataBase()
             findNavController().navigate(R.id.action_registerFragment2_to_homeFragment)
-
         }
         return binding.root
     }
@@ -98,10 +103,9 @@ class RegisterFragment : Fragment() {
     private fun insertUserIntoDataBase() {
         val user = User(0, userName, imageUri.toString(), address, phone, email)
         mUserViewModel.currentUserId.observe(viewLifecycleOwner, Observer {
-            Log.d("Helo", "id: register ${mUserViewModel.currentUserId.value}")
-
+            editor.putLong("id", mUserViewModel.currentUserId.value!!)
         })
-        val currentUserId = mUserViewModel.addUser(user)
+        mUserViewModel.addUser(user).value
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
@@ -148,25 +152,18 @@ class RegisterFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
-           // binding.registerProfileImage.setImageURI(imageUri)
+            // binding.registerProfileImage.setImageURI(imageUri)
             Glide.with(requireContext())
                 .load(imageUri)
                 .into(binding.registerProfileImage)
-
-//            bitmap = MediaStore.Images.Media.getBitmap(
-//                requireContext().applicationContext.contentResolver,
-//                imageUri
-//            )
         }
     }
-
 
     private fun isValidForm(userName: String, password: String): Boolean {
         if (TextUtils.isEmpty(userName)) {
             binding.userNameEditText.error = "UserName is Required"
             return false
         }
-
 
         if (userName.length >= 10) {
             binding.userNameEditText.error = "User name is too long"
@@ -179,6 +176,4 @@ class RegisterFragment : Fragment() {
         }
         return true
     }
-
-
 }

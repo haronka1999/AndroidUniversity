@@ -25,19 +25,22 @@ class EditDialogFragment : DialogFragment() {
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var newValue: String
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_dialog, container, false)
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-     //   Log.d("Helo", "id: ${mUserViewModel.id}")
-        Log.d("Helo", "currentUserIdInDataBase: ${mUserViewModel.currentUserId.value}")
-
         binding.cancelButton.setOnClickListener {
             dismiss()
         }
+
         binding.saveButton.setOnClickListener {
             newValue = binding.newValueEditText.text.toString()
             if (newValue == "") {
@@ -48,46 +51,35 @@ class EditDialogFragment : DialogFragment() {
             dismiss()
         }
 
-
-
         return binding.root
     }
 
-    private fun insertNewData() {
-        //this defines which data need to be edited
-        val dataBeEdited = mainViewModel.dataBeEdited
-        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-        val editor = sharedPref.edit()
 
+    //defines which data need to be edited
+    private fun insertNewData() {
+        val dataBeEdited = mainViewModel.dataBeEdited
+        val editor = sharedPref.edit()
         when (dataBeEdited) {
             0 -> {
-                //editUserName
-//                val address = sharedPref.getString("address", "")
-//                val phone = sharedPref.getString("phone", "")
-//                val email = sharedPref.getString("email", "")
                 editor.putString("username", newValue)
                 editor.apply()
             }
             1 -> {
                 editor.putString("address", newValue)
                 editor.apply()
-
             }
             2 -> {
                 editor.putString("phone", newValue)
                 editor.apply()
-
             }
             3 -> {
                 editor.putString("email", newValue)
                 editor.apply()
-
             }
             else -> {
                 //error
                 Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }

@@ -17,12 +17,11 @@ import kotlin.properties.Delegates
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
+    //attributes to share
     var currentUserId: MutableLiveData<Long> = MutableLiveData()
     val readAllData: LiveData<List<User>>
 
-    private var sharedPref: SharedPreferences =
-        application.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-    private var editor = sharedPref.edit()
+    //helper attributes
     private val repository: UserRepository
     private var id by Delegates.notNull<Long>()
 
@@ -41,9 +40,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return currentUserId
     }
 
-    fun getCurrentUserId(currentUserName : String){
+    fun getCurrentUserId(currentUserName : String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCurrentUserId(currentUserName)
+          repository.getCurrentUserId(currentUserName)
         }
     }
 

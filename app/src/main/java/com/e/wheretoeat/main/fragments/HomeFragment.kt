@@ -27,12 +27,17 @@ import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
-    private lateinit var binding: FragmentHomeBinding
+
+    //viewModels
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var restViewModel: RestaurantViewModel
     private lateinit var mUserViewModel: UserViewModel
+
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: RestaurantAdapter
+
+    //helper attributes
     private lateinit var restaurants: MutableList<ApiRestaurant>
     private lateinit var cities: MutableList<String>
 
@@ -57,6 +62,9 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         setRecycleView()
         setFilterSpinner()
         setSortSpinner()
+
+        val id = mUserViewModel.getCurrentUserId(sharedPref.getString("username","").toString())
+        Log.d("Helo", "currentID $id")
         return binding.root
     }
 

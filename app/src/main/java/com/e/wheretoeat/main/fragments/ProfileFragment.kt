@@ -28,17 +28,33 @@ class ProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        bindItems()
 
+        bindItems()
+        editItem()
+
+        binding.favoriteButton.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_favoriteFragment)
+        }
+
+        binding.logOutButton.setOnClickListener {
+            val settings =
+                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE)
+            settings.edit().clear().apply()
+            findNavController().navigate(R.id.action_profileFragment_to_registerFragment2)
+        }
+
+        return binding.root
+    }
+
+    private fun editItem() {
         binding.editUserName.setOnClickListener {
             mainViewModel.dataBeEdited = 0
             EditDialogFragment().show(parentFragmentManager, "")
@@ -57,20 +73,6 @@ class ProfileFragment : Fragment() {
             mainViewModel.dataBeEdited = 3
             EditDialogFragment().show(parentFragmentManager, "")
         }
-
-
-        binding.favoriteButton.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_favoriteFragment)
-        }
-
-        binding.logOutButton.setOnClickListener {
-            val settings =
-                requireContext().getSharedPreferences("credentials", Context.MODE_PRIVATE)
-            settings.edit().clear().apply()
-            findNavController().navigate(R.id.action_profileFragment_to_registerFragment2)
-        }
-
-        return binding.root
     }
 
     private fun bindItems() {
