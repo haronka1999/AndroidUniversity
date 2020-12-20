@@ -31,26 +31,12 @@ class MainViewModel : ViewModel() {
     //3 ---> email
     var dataBeEdited = -1
 
-
     fun getAllRestaurantsFromDropBox() {
         val client = OkHttpClient()
         val request =
             Request.Builder().url("https://www.dropbox.com/s/94t6su4cimnrdnt/restaurants.json?dl=1")
                 .build()
-        client.newCall(request).enqueue(object : Callback<List<ApiRestaurant>>,
-            okhttp3.Callback {
-            override fun onResponse(
-                call: Call<List<ApiRestaurant>>,
-                response: Response<List<ApiRestaurant>>
-            ) {
-                val myData = response.body()
-                Log.d("Helo", "onresponse 1  : $myData")
-            }
-
-            override fun onFailure(call: Call<List<ApiRestaurant>>, t: Throwable) {
-                Log.d("Helo", "onfailure 1 - ${t.message}")
-            }
-
+        client.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onFailure(call: okhttp3.Call, e: IOException) {
                 Log.d("Helo", "onfailure 2 - ${e.message}")
             }
@@ -58,9 +44,7 @@ class MainViewModel : ViewModel() {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 parseResponse(response.body()!!.string())
             }
-
         })
-
     }
 
     fun parseResponse(response: String) {
