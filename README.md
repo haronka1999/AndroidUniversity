@@ -1,6 +1,6 @@
 # WhereToEat
 
-The "WhereToEat" project is a simple application written in Kotlin for a University project.
+The "WhereToEat" project is a simple application written for Android OS in Kotlin for a University project.
 
 ## Description
 
