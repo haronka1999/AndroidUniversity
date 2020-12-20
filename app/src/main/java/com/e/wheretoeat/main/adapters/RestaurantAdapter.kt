@@ -55,8 +55,12 @@ class RestaurantAdapter(
         val currentItem = list[position]
         holder.titleTextView.text = currentItem.name
         holder.imageView.setImageResource(R.drawable.food)
-        holder.priceView.text = currentItem.price.toString()
-        holder.addressTextView.text = currentItem.address
+
+        val fullAddress = "Address: ${currentItem.address}"
+        val priceTag = "Price: ${currentItem.price}"
+
+        holder.priceView.text = priceTag
+        holder.addressTextView.text = fullAddress
     }
 
     // 4.

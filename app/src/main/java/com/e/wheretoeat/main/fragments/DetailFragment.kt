@@ -63,7 +63,6 @@ class DetailFragment : Fragment() {
             } else {
                 binding.addToFav.setImageResource(R.drawable.ic_love_red)
                 mainViewModel.favoriteRestaurants.value!!.add(currentRestaurant)
-                mainViewModel.favoriteRestaurants.value!!.add(currentRestaurant)
 
                 //add an entity to the restaurant table in ROOM database
                 mRestViewModel.addRestaurant(mRestViewModel.castToEntityRestaurant(currentRestaurant))
