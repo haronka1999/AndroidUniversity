@@ -1,16 +1,10 @@
 package com.e.wheretoeat.main.viewmodels
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.e.wheretoeat.main.api.ApiRepository
-import com.e.wheretoeat.main.data.restaurant.Restaurant
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.models.ApiRestaurant
-import com.e.wheretoeat.main.models.ApiRestaurantResponse
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray

@@ -1,4 +1,4 @@
-package com.e.wheretoeat.main.data.user
+package com.e.wheretoeat.main.viewmodels
 
 import android.app.Application
 import android.content.Context
@@ -9,6 +9,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.e.wheretoeat.main.data.MyDatabase
+import com.e.wheretoeat.main.data.user.User
+import com.e.wheretoeat.main.data.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates

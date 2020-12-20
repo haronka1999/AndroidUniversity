@@ -3,7 +3,6 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentHomeBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
-import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
+import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.data.user.User
-import com.e.wheretoeat.main.data.user.UserViewModel
+import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
@@ -36,15 +35,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var adapter: RestaurantAdapter
     private lateinit var restaurants: MutableList<ApiRestaurant>
     private lateinit var cities: MutableList<String>
-
-    private var isLastPage: Boolean = false
-    private var isLoading: Boolean = false
-    var handler: Handler = Handler()
-
-    companion object {
-        const val PAGE_START = 1
-        private var CURRENT_PAGE = PAGE_START
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,38 +140,16 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
         }
-    }
-    //todo
-    private fun loadMore() {
-    
     }
 
     private fun setRecycleView() {
-
         val recyclerView: RecyclerView = binding.restaurantRecyclerView
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                Log.d("Helo", "onscrolled: $recyclerView")
-                Log.d("Helo", "dx: $dx")
-                Log.d("Helo", "dy: $dy")
-                if (!isLoading) {
-                    if (layoutManager.findLastCompletelyVisibleItemPosition() == restaurants.size - 1) {
-                        Log.d("Helo", "in the if onscrolled")
-                        loadMore()
-                        isLoading = true
-                    }
-                }
-            }
-        })
     }
 
 

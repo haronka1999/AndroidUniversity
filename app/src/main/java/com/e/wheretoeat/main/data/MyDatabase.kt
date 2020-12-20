@@ -9,7 +9,6 @@ import com.e.wheretoeat.main.data.restaurant.RestaurantDao
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserDao
 
-
 @Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
 abstract class MyDatabase : RoomDatabase() {
 

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -27,7 +26,7 @@ import com.bumptech.glide.Glide
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.user.User
-import com.e.wheretoeat.main.data.user.UserViewModel
+import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 

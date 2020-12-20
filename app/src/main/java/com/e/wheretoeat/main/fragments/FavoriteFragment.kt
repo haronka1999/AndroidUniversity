@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentFavoriteBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
-import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
-import com.e.wheretoeat.main.data.user.UserViewModel
+import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 

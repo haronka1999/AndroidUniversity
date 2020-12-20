@@ -1,8 +1,5 @@
 package com.e.wheretoeat.main.fragments
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentDetailBinding
-import com.e.wheretoeat.main.data.restaurant.RestaurantViewModel
+import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 

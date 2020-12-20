@@ -12,10 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentEditDialogBinding
-import com.e.wheretoeat.main.data.user.UserViewModel
+import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 class EditDialogFragment : DialogFragment() {
