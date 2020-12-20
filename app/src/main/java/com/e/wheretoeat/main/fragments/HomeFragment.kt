@@ -63,8 +63,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         setFilterSpinner()
         setSortSpinner()
 
-        val id = mUserViewModel.getCurrentUserId(sharedPref.getString("username","").toString())
-        Log.d("Helo", "currentID $id")
         return binding.root
     }
 
@@ -84,7 +82,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 position: Int,
                 id: Long
             ) {
-                Log.d("Helo", "onitemselected sort spinner")
                 /*
                 Here I decide if I need to sort by name or price
                 1 --> name
@@ -92,13 +89,11 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                  */
                 when (position) {
                     1 -> {
-                        Log.d("Helo", "name")
                         val sortedList = restaurants.sortedBy { it.name }
                         adapter = RestaurantAdapter(sortedList.toMutableList(), this@HomeFragment)
                         binding.restaurantRecyclerView.adapter = adapter
                     }
                     2 -> {
-                        Log.d("Helo", "price")
                         restaurants.sortBy { it.price }
                         adapter = RestaurantAdapter(restaurants, this@HomeFragment)
                         binding.restaurantRecyclerView.adapter = adapter
@@ -122,8 +117,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 position: Int,
                 id: Long
             ) {
-                Log.d("Helo", "cities")
-
                 /*
                 When the screen is loaded automatically
                 will be called for the first item
@@ -143,7 +136,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
                 adapter = RestaurantAdapter(filteredRestaurants, this@HomeFragment)
                 binding.restaurantRecyclerView.adapter = adapter
-                Log.d("Helo", "current pos: $position")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -157,7 +149,6 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-
     }
 
 
