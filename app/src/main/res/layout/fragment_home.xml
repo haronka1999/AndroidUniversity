@@ -96,6 +96,11 @@
             tools:layout_editor_absoluteY="0dp"
             tools:listitem="@layout/recycle_view_item" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </layout>

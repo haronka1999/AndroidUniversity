@@ -32,6 +32,8 @@ class DetailFragment : Fragment() {
         mRestViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
         //check if the current article is in the favorites
+
+
         if (mainViewModel.favoriteRestaurants.value!!.contains(mainViewModel.currentApiRestaurant)) {
             binding.addToFav.setImageResource(R.drawable.ic_love_red)
         }

@@ -1,31 +1,34 @@
 package com.e.wheretoeat.main.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
-import java.io.InputStream
 
 
 class RegisterFragment : Fragment() {
@@ -40,12 +43,12 @@ class RegisterFragment : Fragment() {
     private var userNames: MutableList<String> = mutableListOf()
     private lateinit var sharedPref: SharedPreferences
     private lateinit var imageUri: Uri
-    private lateinit var bitmap: Bitmap
+
 
     companion object {
-        //image pick code
-        val IMAGE_PICK_CODE = 1;
+        const val IMAGE_PICK_CODE = 1;
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +66,6 @@ class RegisterFragment : Fragment() {
 
         binding.chooseImageButton.setOnClickListener {
             pickImageFromGallery()
-
         }
 
         binding.saveButton.setOnClickListener {
@@ -71,7 +73,6 @@ class RegisterFragment : Fragment() {
             address = binding.addressEditText.text.toString()
             phone = binding.phoneNumber.text.toString()
             email = binding.emailEditText.text.toString()
-
 //            if (!isValidForm(userName, password)) {
 //                return@setOnClickListener
 //            }
@@ -79,11 +80,12 @@ class RegisterFragment : Fragment() {
             //add the user details to shared preferences
             val editor = sharedPref.edit()
             editor.clear()
+            editor.putString("image", imageUri.toString())
             editor.putString("username", userName)
             editor.putString("address", address)
             editor.putString("phone", phone)
             editor.putString("email", email)
-            editor.putString("pictureUrl", bitmap.toString())
+            editor.putString("pictureUrl", imageUri.toString())
             editor.apply()
 
             //add data to database
@@ -96,35 +98,66 @@ class RegisterFragment : Fragment() {
 
     private fun insertUserIntoDataBase() {
         val user = User(0, userName, imageUri.toString(), address, phone, email)
-        Log.d("Helo", "itt vagy ? ")
         mUserViewModel.currentUserId.observe(viewLifecycleOwner, Observer {
             Log.d("Helo", "id: register ${mUserViewModel.currentUserId.value}")
 
         })
         val currentUserId = mUserViewModel.addUser(user)
-        Log.d("Helo", "userid - registerfragmnent ${currentUserId.value}")
         Toast.makeText(activity, "Successfully added", Toast.LENGTH_SHORT).show()
     }
 
     private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, IMAGE_PICK_CODE)
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), IMAGE_PICK_CODE
+            )
+        } else {
+            //Intent to pick image
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, IMAGE_PICK_CODE)
+        }
     }
 
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            IMAGE_PICK_CODE ->                 // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    val galleryIntent =
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    startActivityForResult(galleryIntent, IMAGE_PICK_CODE)
+                } else {
+                    Toast.makeText(activity, "You denied", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
-            binding.registerProfileImage.setImageURI(imageUri)
-            val inpStream: InputStream =
-                requireContext().contentResolver.openInputStream(imageUri)!!
-            bitmap = BitmapFactory.decodeStream(inpStream)
-            inpStream.close()
-            //Log.d("Helo", "bitmaP: $bitmap")
+           // binding.registerProfileImage.setImageURI(imageUri)
+            Glide.with(requireContext())
+                .load(imageUri)
+                .into(binding.registerProfileImage)
+
+//            bitmap = MediaStore.Images.Media.getBitmap(
+//                requireContext().applicationContext.contentResolver,
+//                imageUri
+//            )
         }
     }
 

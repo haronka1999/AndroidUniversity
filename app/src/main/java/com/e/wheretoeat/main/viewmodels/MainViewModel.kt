@@ -1,5 +1,6 @@
 package com.e.wheretoeat.main.viewmodels
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +26,7 @@ class MainViewModel : ViewModel() {
     //viewModel data:
     var users: MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-    var restaurants: MutableList<ApiRestaurant> = mutableListOf()
+
     lateinit var currentApiRestaurant: ApiRestaurant
     var cities: MutableList<String> = mutableListOf()
 
@@ -61,9 +62,7 @@ class MainViewModel : ViewModel() {
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                // val myData = response.body()!!.string()
                 parseResponse(response.body()!!.string())
-                //   Log.d("Helo", "onresponse 2 : $myData")
             }
 
         })

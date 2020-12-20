@@ -21,7 +21,6 @@ class RestaurantAdapter(
 ) :
     RecyclerView.Adapter<RestaurantAdapter.DataViewHolder>() {
 
-
     // 1. user defined ViewHolder type
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -42,10 +41,6 @@ class RestaurantAdapter(
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(item: ApiRestaurant)
-    }
-
 
     // 2. Called only a few times = number of items on screen + a few more ones
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -53,6 +48,7 @@ class RestaurantAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.recycle_view_item, parent, false)
         return DataViewHolder(itemView)
     }
+
 
     // 3. Called many times, when we scroll the list
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -62,10 +58,15 @@ class RestaurantAdapter(
 
         holder.priceView.text = currentItem.price.toString()
         holder.addressTextView.text = currentItem.address
-
     }
 
     // 4.
     override fun getItemCount() = list.size
+
+
+    interface OnItemClickListener {
+        fun onItemClick(item: ApiRestaurant)
+    }
+
 }
 

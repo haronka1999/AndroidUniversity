@@ -2,22 +2,19 @@ package com.e.wheretoeat.main.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentProfileBinding
 import com.e.wheretoeat.main.viewmodels.MainViewModel
-import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -27,7 +24,12 @@ class ProfileFragment : Fragment() {
     private lateinit var address: String
     private lateinit var phone: String
     private lateinit var email: String
-    private lateinit var bitmap: Bitmap
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +37,10 @@ class ProfileFragment : Fragment() {
     ): View? {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
-
+        bindItems()
 
         binding.editUserName.setOnClickListener {
             mainViewModel.dataBeEdited = 0
-       //     val action = ProfileFragmentDirections.actionProfileFragmentToEditDialogFragment(currentUser)
             EditDialogFragment().show(parentFragmentManager, "")
         }
         binding.editAddress.setOnClickListener {
@@ -59,24 +59,7 @@ class ProfileFragment : Fragment() {
         }
 
 
-
-
-
-        userName = sharedPref.getString("username", "").toString()
-        address = sharedPref.getString("address", "").toString()
-        phone = sharedPref.getString("phone", "").toString()
-        email = sharedPref.getString("email", "").toString()
-
-        val bitmapString = sharedPref.getString("pictureUrl", "").toString()
-        val img: ByteArray = bitmapString.toByteArray()
-        //Log.d("Helo", "img: $img")
-
-        binding.userNameTextView.text = userName
-        binding.addressTextView.text = address
-        binding.phoneTextView.text = phone
-        binding.emailTextView.text = email
-
-        binding.favoriteButton.setOnClickListener{
+        binding.favoriteButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_favoriteFragment)
         }
 
@@ -90,4 +73,18 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    private fun bindItems() {
+        userName = sharedPref.getString("username", "").toString()
+        address = sharedPref.getString("address", "").toString()
+        phone = sharedPref.getString("phone", "").toString()
+        email = sharedPref.getString("email", "").toString()
+        val image = sharedPref.getString("pictureUrl", "")
+        Glide.with(requireContext())
+            .load(image)
+            .into(binding.profilePic)
+        binding.userNameTextView.text = userName
+        binding.addressTextView.text = address
+        binding.phoneTextView.text = phone
+        binding.emailTextView.text = email
+    }
 }

@@ -3,6 +3,7 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,9 +37,18 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var restaurants: MutableList<ApiRestaurant>
     private lateinit var cities: MutableList<String>
 
+    private var isLastPage: Boolean = false
+    private var isLoading: Boolean = false
+    var handler: Handler = Handler()
+
+    companion object {
+        const val PAGE_START = 1
+        private var CURRENT_PAGE = PAGE_START
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.VISIBLE
         restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
@@ -143,13 +153,35 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
         }
     }
+    //todo
+    private fun loadMore() {
+    
+    }
 
     private fun setRecycleView() {
+
         val recyclerView: RecyclerView = binding.restaurantRecyclerView
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                Log.d("Helo", "onscrolled: $recyclerView")
+                Log.d("Helo", "dx: $dx")
+                Log.d("Helo", "dy: $dy")
+                if (!isLoading) {
+                    if (layoutManager.findLastCompletelyVisibleItemPosition() == restaurants.size - 1) {
+                        Log.d("Helo", "in the if onscrolled")
+                        loadMore()
+                        isLoading = true
+                    }
+                }
+            }
+        })
     }
 
 
@@ -170,6 +202,4 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
             mainViewModel.users.value = tempList
         })
     }
-
-
 }
