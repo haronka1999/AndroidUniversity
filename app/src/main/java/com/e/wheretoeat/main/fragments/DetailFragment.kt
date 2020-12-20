@@ -16,6 +16,10 @@ import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
+/*
+Displays the details after a click on the Home fragment or the Favorite fragment
+ */
+
 class DetailFragment : Fragment() {
 
     //viewmodels
@@ -49,8 +53,8 @@ class DetailFragment : Fragment() {
 
         /*
         Here I decide if the current restaurant is in the favorite list.
-        If it's not add to the database and the viewmodel,
-        if there is we can unfavorite it and remove from the viewmodel
+        If it's not add to the database and to the viewmodel,
+        if there is we can un-favorite it and remove from the viewmodel
          */
         binding.addToFav.setOnClickListener {
             if (favoriteRestaurants.contains(currentRestaurant)) {
@@ -58,6 +62,7 @@ class DetailFragment : Fragment() {
                 mainViewModel.favoriteRestaurants.value!!.remove(currentRestaurant)
             } else {
                 binding.addToFav.setImageResource(R.drawable.ic_love_red)
+                mainViewModel.favoriteRestaurants.value!!.add(currentRestaurant)
                 mainViewModel.favoriteRestaurants.value!!.add(currentRestaurant)
 
                 //add an entity to the restaurant table in ROOM database

@@ -3,7 +3,6 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
-
 
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 

@@ -8,19 +8,14 @@ import com.e.wheretoeat.main.models.ApiRestaurant
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
+    //attributes to share:
     var apiRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-
-    //viewModel data:
     var users: MutableLiveData<MutableList<User>> = MutableLiveData()
     var favoriteRestaurants: MutableLiveData<MutableList<ApiRestaurant>> = MutableLiveData()
-
     lateinit var currentApiRestaurant: ApiRestaurant
     var cities: MutableList<String> = mutableListOf()
 

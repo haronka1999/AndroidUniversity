@@ -2,7 +2,6 @@ package com.e.wheretoeat.main.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +16,13 @@ import com.e.wheretoeat.databinding.FragmentProfileBinding
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 class ProfileFragment : Fragment() {
+
     private val mainViewModel: MainViewModel by activityViewModels()
+
     private lateinit var binding: FragmentProfileBinding
     private lateinit var sharedPref: SharedPreferences
+
+    //attributes for the user data
     private lateinit var userName: String
     private lateinit var address: String
     private lateinit var phone: String
@@ -38,7 +41,7 @@ class ProfileFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
         bindItems()
-        editItem()
+        editItemListeners()
 
         binding.favoriteButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_favoriteFragment)
@@ -54,7 +57,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    private fun editItem() {
+    private fun editItemListeners() {
         binding.editUserName.setOnClickListener {
             mainViewModel.dataBeEdited = 0
             EditDialogFragment().show(parentFragmentManager, "")

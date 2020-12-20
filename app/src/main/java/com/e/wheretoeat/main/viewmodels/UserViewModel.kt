@@ -1,8 +1,6 @@
 package com.e.wheretoeat.main.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -40,9 +38,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return currentUserId
     }
 
-    fun getCurrentUserId(currentUserName : String) {
+    fun getCurrentUserId(currentUserName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-          repository.getCurrentUserId(currentUserName)
+            repository.getCurrentUserId(currentUserName)
         }
     }
 

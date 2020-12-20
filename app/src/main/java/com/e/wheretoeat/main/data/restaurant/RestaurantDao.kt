@@ -11,7 +11,6 @@ import com.e.wheretoeat.main.data.user.User
 @Dao
 interface RestaurantDao {
 
-
     // this function only add the favorite restaurant
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addRestaurant(restaurant: Restaurant)

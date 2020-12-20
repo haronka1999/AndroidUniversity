@@ -1,7 +1,5 @@
 package com.e.wheretoeat.main.adapters
 
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.main.models.ApiRestaurant
-import java.io.ByteArrayInputStream
-import java.io.InputStream
-import java.net.URL
 
+/*
+This adapter attach the recycler_view item with
+the Restaurant recycler views
+in the home fragment and in the favorite list
+ */
 
 class RestaurantAdapter(
     private var list: MutableList<ApiRestaurant>,
@@ -55,14 +55,12 @@ class RestaurantAdapter(
         val currentItem = list[position]
         holder.titleTextView.text = currentItem.name
         holder.imageView.setImageResource(R.drawable.food)
-
         holder.priceView.text = currentItem.price.toString()
         holder.addressTextView.text = currentItem.address
     }
 
     // 4.
     override fun getItemCount() = list.size
-
 
     interface OnItemClickListener {
         fun onItemClick(item: ApiRestaurant)

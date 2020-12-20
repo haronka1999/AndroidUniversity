@@ -9,6 +9,13 @@ import com.e.wheretoeat.main.data.restaurant.RestaurantDao
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.data.user.UserDao
 
+/*
+A Singleton class which define the ROOM database
+
+Note: I didn'nt change the version number I only
+changed the database name during development
+ */
+
 @Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
 abstract class MyDatabase : RoomDatabase() {
 
@@ -32,7 +39,6 @@ abstract class MyDatabase : RoomDatabase() {
                 ).build()
                 INSTANCE = instance
                 return instance
-
             }
         }
     }

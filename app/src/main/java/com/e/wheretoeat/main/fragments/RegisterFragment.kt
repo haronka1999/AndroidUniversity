@@ -1,6 +1,7 @@
 package com.e.wheretoeat.main.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -10,7 +11,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +18,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -27,7 +25,6 @@ import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentRegisterBinding
 import com.e.wheretoeat.main.data.user.User
 import com.e.wheretoeat.main.viewmodels.UserViewModel
-import com.e.wheretoeat.main.viewmodels.MainViewModel
 
 
 class RegisterFragment : Fragment() {
@@ -42,7 +39,6 @@ class RegisterFragment : Fragment() {
     private var userNames: MutableList<String> = mutableListOf()
 
     //attributes for the user
-    private lateinit var userId: String
     private lateinit var userName: String
     private lateinit var address: String
     private lateinit var phone: String
@@ -51,9 +47,10 @@ class RegisterFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     companion object {
-        const val IMAGE_PICK_CODE = 1;
+        const val IMAGE_PICK_CODE = 1
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
@@ -65,7 +62,7 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().findViewById<View>(R.id.bottomNavigationView).visibility = View.GONE
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
@@ -83,7 +80,6 @@ class RegisterFragment : Fragment() {
 //            }
 
             //add the user details to shared preferences
-
             editor.clear()
             editor.putString("image", imageUri.toString())
             editor.putString("username", userName)
@@ -102,7 +98,7 @@ class RegisterFragment : Fragment() {
 
     private fun insertUserIntoDataBase() {
         val user = User(0, userName, imageUri.toString(), address, phone, email)
-        mUserViewModel.currentUserId.observe(viewLifecycleOwner, Observer {
+        mUserViewModel.currentUserId.observe(viewLifecycleOwner, {
             editor.putLong("id", mUserViewModel.currentUserId.value!!)
         })
         mUserViewModel.addUser(user).value

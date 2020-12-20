@@ -1,12 +1,11 @@
 package com.e.wheretoeat.main.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,21 +14,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentFavoriteBinding
 import com.e.wheretoeat.main.adapters.RestaurantAdapter
-import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
+import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
+
+/*
+Contains a simple recycler view with the favorited data
+ */
 
 class FavoriteFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
-    lateinit var binding: FragmentFavoriteBinding
+    //viewmodels
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var restViewModel: RestaurantViewModel
 
+    lateinit var binding: FragmentFavoriteBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite, container, false)
         restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
@@ -37,7 +41,8 @@ class FavoriteFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
         val favoriteList = mainViewModel.favoriteRestaurants.value!!
         if (favoriteList.isEmpty()) {
-            binding.emptyTextView.text = "You haven't added any favorite restaurant yet ! "
+            val emptyText = "You haven't added any favorite restaurant yet ! "
+            binding.emptyTextView.text = emptyText
         }
 
         return binding.root
@@ -49,13 +54,10 @@ class FavoriteFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         recyclerView.adapter = RestaurantAdapter(apiList!!, this@FavoriteFragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
-        Log.d("Helo", "read all data ${restViewModel.readAllData.value}")
     }
 
     override fun onItemClick(item: ApiRestaurant) {
         mainViewModel.currentApiRestaurant = item
         findNavController().navigate(R.id.action_favoriteFragment_to_detailFragment)
     }
-
-
 }

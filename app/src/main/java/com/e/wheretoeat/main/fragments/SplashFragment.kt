@@ -16,6 +16,11 @@ import com.e.wheretoeat.databinding.FragmentSplashBinding
 import com.e.wheretoeat.main.viewmodels.RestaurantViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
+/*
+Here the restaurants are loaded from the dropbox link.
+And also the city list is loaded forfurther usages
+ */
+
 class SplashFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -50,7 +55,7 @@ class SplashFragment : Fragment() {
         mainViewModel.apiRestaurants.observe(viewLifecycleOwner, {
             val credentials = sharedPref.all
             val restaurantsSize = mainViewModel.apiRestaurants.value!!.size
-            mainViewModel.cities.add(0, "Choose City")
+            mainViewModel.cities.add(0, "Choose")
             for (i in 1 until restaurantsSize + 1) {
                 mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i - 1].city)
             }

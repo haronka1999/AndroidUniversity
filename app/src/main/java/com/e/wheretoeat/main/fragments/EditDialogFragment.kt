@@ -16,6 +16,7 @@ import com.e.wheretoeat.databinding.FragmentEditDialogBinding
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 import com.e.wheretoeat.main.viewmodels.UserViewModel
 
+
 class EditDialogFragment : DialogFragment() {
 
 

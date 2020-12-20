@@ -32,8 +32,6 @@ class RestaurantViewModel(application: Application) : AndroidViewModel(applicati
     /*
     The functions below will need for the database queries
      */
-
-
     fun castToEntityRestaurant(rest: ApiRestaurant) = Restaurant(
         0,
         rest.name,
