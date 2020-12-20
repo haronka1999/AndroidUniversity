@@ -3,7 +3,6 @@ package com.e.wheretoeat.main.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +13,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.e.wheretoeat.R
 import com.e.wheretoeat.databinding.FragmentEditDialogBinding
-import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.viewmodels.MainViewModel
+import com.e.wheretoeat.main.viewmodels.UserViewModel
 
 class EditDialogFragment : DialogFragment() {
 
-    private lateinit var binding: FragmentEditDialogBinding
-    private lateinit var sharedPref: SharedPreferences
+
+    //viewmodels
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mUserViewModel: UserViewModel
+
+    private lateinit var binding: FragmentEditDialogBinding
+    private lateinit var sharedPref: SharedPreferences
     private lateinit var newValue: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,7 @@ class EditDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_dialog, container, false)
 
         binding.cancelButton.setOnClickListener {
@@ -50,7 +52,6 @@ class EditDialogFragment : DialogFragment() {
             insertNewData()
             dismiss()
         }
-
         return binding.root
     }
 
