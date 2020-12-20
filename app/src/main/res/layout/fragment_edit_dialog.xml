@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
                 android:layout_below="@id/EditTextView"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:hint="New Value" />
+                android:hint="@string/new_value" />
 
             <Button
                 android:id="@+id/cancelButton"
@@ -45,7 +45,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_button"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 app:backgroundTint="@color/buttonColor" />
 
             <Button
@@ -56,7 +56,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_button"
-                android:text="Save"
+                android:text="@string/save"
                 app:backgroundTint="@color/buttonColor" />
         </RelativeLayout>
 
