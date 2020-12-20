@@ -24,6 +24,7 @@ import com.e.wheretoeat.main.viewmodels.UserViewModel
 import com.e.wheretoeat.main.models.ApiRestaurant
 import com.e.wheretoeat.main.viewmodels.MainViewModel
 
+
 class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     //viewModels
@@ -37,7 +38,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     //helper attributes
     private lateinit var restaurants: MutableList<ApiRestaurant>
-    private lateinit var filteredList: MutableList<ApiRestaurant>
+    private lateinit var filteredRestaurants: MutableList<ApiRestaurant>
     private lateinit var cities: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         restViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         sharedPref = context?.getSharedPreferences("credentials", Context.MODE_PRIVATE)!!
         restaurants = mainViewModel.apiRestaurants.value!!
-        filteredList = mutableListOf()
+        filteredRestaurants = mutableListOf()
         adapter = RestaurantAdapter(restaurants, this@HomeFragment)
         cities = mainViewModel.cities
     }
@@ -93,8 +94,8 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                         tempList.add(restaurants[i])
                     }
                 }
-                filteredList = tempList
-                adapter = RestaurantAdapter(filteredList, this@HomeFragment)
+                filteredRestaurants = tempList
+                adapter = RestaurantAdapter(filteredRestaurants, this@HomeFragment)
                 binding.restaurantRecyclerView.adapter = adapter
             }
 
@@ -120,10 +121,12 @@ class HomeFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 id: Long
             ) {
 
-                val tempList = if(filteredList.isEmpty()){
+                //if the user didn't choose any filtering city
+                //the user will be able to sort the whole data
+                val tempList = if (filteredRestaurants.isEmpty()) {
                     restaurants
-                }else{
-                    filteredList
+                } else {
+                    filteredRestaurants
                 }
 
                 /*
