@@ -36,7 +36,6 @@ class RegisterFragment : Fragment() {
     //helpers
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var sharedPref: SharedPreferences
-    private var userNames: MutableList<String> = mutableListOf()
 
     //attributes for the user
     private lateinit var userName: String
@@ -75,9 +74,9 @@ class RegisterFragment : Fragment() {
             address = binding.addressEditText.text.toString()
             phone = binding.phoneNumber.text.toString()
             email = binding.emailEditText.text.toString()
-//            if (!isValidForm(userName, password)) {
-//                return@setOnClickListener
-//            }
+            if (!isValidForm(userName, address,phone,email)) {
+                return@setOnClickListener
+            }
 
             //add the user details to shared preferences
             editor.clear()
@@ -94,6 +93,43 @@ class RegisterFragment : Fragment() {
             findNavController().navigate(R.id.action_registerFragment2_to_homeFragment)
         }
         return binding.root
+    }
+
+    private fun isValidForm(userName: String, address: String, phone : String, email : String): Boolean {
+        if (TextUtils.isEmpty(userName)) {
+            binding.userNameEditText.error = "UserName is Required"
+            return false
+        }
+
+        if (userName.length >= 12) {
+            binding.userNameEditText.error = "User name is too long"
+            return false
+        }
+
+        if (TextUtils.isEmpty(address)) {
+            binding.addressEditText.error = "Address is Required"
+            return false
+        }
+        if (TextUtils.isEmpty(phone)) {
+            binding.phoneNumber.error = "Phone is Required"
+            return false
+        }
+        if (TextUtils.isEmpty(email)) {
+            binding.emailEditText.error = "Email is Required"
+            return false
+        }
+
+        if(!isValidEmail(email)){
+            binding.emailEditText.error = "Email is not correct"
+        }
+
+        if(phone.length >= 10){
+            binding.phoneNumber.error = "Phone number is not valid"
+        }
+
+
+
+        return true
     }
 
     private fun insertUserIntoDataBase() {
@@ -126,6 +162,9 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -135,9 +174,10 @@ class RegisterFragment : Fragment() {
         when (requestCode) {
             IMAGE_PICK_CODE ->                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val galleryIntent =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    startActivityForResult(galleryIntent, IMAGE_PICK_CODE)
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    intent.action = Intent.ACTION_GET_CONTENT
+                    startActivityForResult(intent, IMAGE_PICK_CODE)
                 } else {
                     Toast.makeText(activity, "You denied", Toast.LENGTH_SHORT).show()
                 }
@@ -155,21 +195,5 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun isValidForm(userName: String, password: String): Boolean {
-        if (TextUtils.isEmpty(userName)) {
-            binding.userNameEditText.error = "UserName is Required"
-            return false
-        }
 
-        if (userName.length >= 10) {
-            binding.userNameEditText.error = "User name is too long"
-            return false
-        }
-
-        if (userNames.contains(userName)) {
-            binding.userNameEditText.error = "This Username is taken"
-            return false
-        }
-        return true
-    }
 }
