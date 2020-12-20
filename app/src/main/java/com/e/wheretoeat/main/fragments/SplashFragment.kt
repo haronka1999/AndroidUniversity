@@ -55,13 +55,15 @@ class SplashFragment : Fragment() {
         mainViewModel.apiRestaurants.observe(viewLifecycleOwner, {
             val credentials = sharedPref.all
             val restaurantsSize = mainViewModel.apiRestaurants.value!!.size
-            mainViewModel.cities.add(0, "Choose")
+            mainViewModel.cities.add(0, "1:Choose")
             for (i in 1 until restaurantsSize + 1) {
                 mainViewModel.cities.add(i, mainViewModel.apiRestaurants.value!![i - 1].city)
             }
-
-            //delete duplicates
+            //delete duplicates:
             mainViewModel.cities = mainViewModel.cities.distinct().toMutableList()
+
+            //order by alphabetical order:
+            mainViewModel.cities.sort()
 
             if (credentials.isEmpty()) {
                 findNavController().navigate(R.id.action_splashFragment_to_registerFragment2)
